@@ -1,5 +1,3 @@
-from .base import INSTALLED_APPS, MIDDLEWARE_CLASSES
-
 DEBUG = True
 DEVELOPMENT = True
 
