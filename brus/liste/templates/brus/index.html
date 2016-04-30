@@ -19,7 +19,7 @@
 <div class="row">
     <h1 class="text-center page-header" style=""> Brusliste for webkom. </h1>
     <div style="float: right;">
-    <form method="post" action="{% url 'logout' %}?next=/">
+    <form method="post" action="{% url 'logout' %}">
         {% csrf_token %}
         <button class="btn btn-default btn-danger btn-sm" type="submit"> Logg ut </button>
     </form>
