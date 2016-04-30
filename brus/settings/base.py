@@ -16,10 +16,10 @@ INSTALLED_APPS = [
     'crispy_forms'
 ]
 
-ABAKUS_TOKEN = 'ffa15ee2b67710020838071b66927e6bb94351bb'
+LOGIN_REDIRECT_URL = '/'
 
 AUTHENTICATION_BACKENDS = (
-    'abakus.auth.AbakusBackend',
+    'django.contrib.auth.backends.ModelBackend',
 )
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -52,8 +52,7 @@ MIDDLEWARE_CLASSES = [
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -2,18 +2,17 @@ import os
 
 import environ
 import raven
-
 from brus.settings import BASE_DIR, INSTALLED_APPS, MIDDLEWARE_CLASSES
 
 env = environ.Env(
     DEBUG=(bool, False),
-    ALLOWED_HOSTS=(list, ['api.abakus.no']),
+    ALLOWED_HOSTS=(list, ['brus.abakus.no']),
 )
 environ.Env.read_env(os.path.join(os.path.dirname(BASE_DIR), '.env'))
 
 DEBUG = env('DEBUG')
 SECRET_KEY = env('SECRET_KEY')
-ALLOWED_HOSTS = env('ALLOWED_HOSTS')
+ALLOWED_HOSTS = []
 
 # Database
 DATABASES = {
@@ -25,12 +24,11 @@ CACHES = {
     'default': env.cache()
 }
 
-# Auth
-ABAKUS_TOKEN = 'ffa15ee2b67710020838071b66927e6bb94351bb'
-
 AUTHENTICATION_BACKENDS = (
     'abakus.auth.AbakusBackend',
 )
+
+ABAKUS_GROUP_REQUIRED = ['Webkom']
 
 # Sentry
 SENTRY_CLIENT = 'raven.contrib.django.raven_compat.DjangoClient'

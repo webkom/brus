@@ -1,7 +1,7 @@
 from .base import INSTALLED_APPS, MIDDLEWARE_CLASSES
 
 DEBUG = True
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = False
 DEVELOPMENT = True
 
 SECRET_KEY = 'secret'
