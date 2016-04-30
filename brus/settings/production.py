@@ -2,7 +2,7 @@ import os
 
 import environ
 import raven
-from brus.settings import BASE_DIR, INSTALLED_APPS, MIDDLEWARE_CLASSES
+from brus.settings import AUTHENTICATION_BACKENDS, BASE_DIR, INSTALLED_APPS, MIDDLEWARE_CLASSES
 
 env = environ.Env(
     DEBUG=(bool, False),
@@ -12,7 +12,7 @@ environ.Env.read_env(os.path.join(os.path.dirname(BASE_DIR), '.env'))
 
 DEBUG = env('DEBUG')
 SECRET_KEY = env('SECRET_KEY')
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
 # Database
 DATABASES = {
@@ -26,7 +26,7 @@ CACHES = {
 
 AUTHENTICATION_BACKENDS = (
     'abakus.auth.AbakusBackend',
-)
+) + AUTHENTICATION_BACKENDS
 
 ABAKUS_GROUP_REQUIRED = ['Webkom']
 
