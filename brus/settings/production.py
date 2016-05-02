@@ -19,11 +19,6 @@ DATABASES = {
     'default': env.db()
 }
 
-# Cache
-CACHES = {
-    'default': env.cache()
-}
-
 AUTHENTICATION_BACKENDS = (
     'abakus.auth.AbakusBackend',
 ) + AUTHENTICATION_BACKENDS
