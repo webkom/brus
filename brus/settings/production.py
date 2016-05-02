@@ -19,6 +19,8 @@ DATABASES = {
     'default': env.db()
 }
 
+ABAKUS_TOKEN = env('ABAKUS_TOKEN')
+
 AUTHENTICATION_BACKENDS = (
     'abakus.auth.AbakusBackend',
 ) + AUTHENTICATION_BACKENDS
