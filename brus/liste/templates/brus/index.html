@@ -1,4 +1,4 @@
-{% load staticfiles %}
+{% load staticfiles crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,7 +30,7 @@
             <li >
                 <form class="form-inline"  action="{% url 'liste:add' %}" method="post">
                     {% csrf_token %}
-                    {{ addForm }}
+                    {{ addForm|crispy }}
                     <button class="btn btn-default btn-info btn-sm">
                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span> add
                     </button>

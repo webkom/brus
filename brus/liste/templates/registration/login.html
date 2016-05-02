@@ -12,13 +12,7 @@
             <p class="card-text text-center">Logg inn</p>
             <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
                 {% csrf_token %}
-                {% for field in form %}
-                    <div class="form-group">
-                    <label for="{{ field.id_for_label }}">{{ field.label }}: </label>
-                    <input class="form-control" id="{{ field.id_for_label }}" name="{{ field.html_name }}" type="{{ field.html_name }}"/>
-                    {{ field.errors }}
-                    </div>
-                {% endfor %}
+                {{ form|crispy }}
                 <button class="btn btn-md btn-danger btn-block" style="margin-top: 20px;"
                         type="submit">Logg inn
                 </button>
