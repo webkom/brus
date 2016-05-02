@@ -1,7 +1,4 @@
 from django.db import models
-#from django.db import User
-
-
 
 
 class Brus(models.Model):
@@ -15,7 +12,6 @@ class Brus(models.Model):
 class Person(models.Model):
     name = models.CharField(max_length=50)
     balance = models.IntegerField(default=0)
-    #user = models.ForeignKey(User, related_name="person")
 
     def setName(self, name):
         self.name = name
@@ -31,22 +27,3 @@ class Person(models.Model):
 
     def __str__(self):
         return '%s %s' % (self.name, self.balance)
-
-"""class User(PersistentModel):
-
-
-def my_view(request):
-    username = request.POST['username']
-    password = request.POST['password']
-    user = authenticate(username=username, password=password)
-    if user is not None:
-        if user.is_active:
-            login(request, user)
-            # Redirect to a success page.
-        else:
-            # Return a 'disabled account' error message
-            ...
-    else:
-        # Return an 'invalid login' error message.
-        ...
-"""

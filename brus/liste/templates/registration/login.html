@@ -1,19 +1,30 @@
 {% load crispy_forms_tags %}
 <html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+
 <body>
-
-
-<h4 class="card-title text-center">Abakus</h4>
-
-<p class="card-text text-center">Logg inn</p>
-
-<form method="post">
-
-    {% csrf_token %}
-    {{ form|crispy }}
-    <button class="btn btn-md btn-primary btn-block" style="margin-top: 10px;"
-            type="submit">Logg inn
-    </button>
-</form>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 col-md-offset-4">
+            <h3 class="card-title text-center">Abakus</h3>
+            <p class="card-text text-center">Logg inn</p>
+            <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}: </label>
+                    <input class="form-control" id="{{ field.id_for_label }}" name="{{ field.html_name }}" type="{{ field.html_name }}"/>
+                    {{ field.errors }}
+                    </div>
+                {% endfor %}
+                <button class="btn btn-md btn-danger btn-block" style="margin-top: 20px;"
+                        type="submit">Logg inn
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>
