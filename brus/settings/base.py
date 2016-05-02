@@ -80,9 +80,6 @@ STATICFILES_FINDERS = (
 )
 STATIC_ROOT = os.path.join(BASE_DIR, 'files', 'static')
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    ('assets', os.path.join(BASE_DIR, 'assets')),
-)
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'files', 'media')
 MEDIA_URL = '/media/'
