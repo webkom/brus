@@ -28,9 +28,9 @@
         <ul class="text-center">
             <h3 class="panel-heading"> Legg til person i bruslista: </h3>
             <li >
-                <form class="form-inline"  action="{{ person.id }}/addPerson/" method="post">
+                <form class="form-inline"  action="{% url 'liste:add' %}" method="post">
                     {% csrf_token %}
-                    {{ formAdd }}
+                    {{ addForm }}
                     <button class="btn btn-default btn-info btn-sm">
                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span> add
                     </button>
@@ -58,18 +58,18 @@
                         <td> {{ person.balance }} </td>
 
                         <td>
-                            <form action="{{ person.id }}/betale/" method="post">
+                            <form action="{% url 'liste:pay' person.id %}" method="post">
                                 {% csrf_token %}
                                 <button  class="btn btn-default  btn-sm" type="submit"> Kjøp brus </button>
                             </form>
                         </td>
                         <td>
 
-                            <form class="form-inline" action="{{ person.id }}/deposit/" method="post">
+                            <form class="form-inline" action="{% url 'liste:deposit' person.id %}" method="post">
                                 {% csrf_token %}
                                 <div class="form-group">
-                                    <label for="{{ form1.name }}">{{ form1.label }}</label>
-                                    {{form.deposit_amount.label }} {{ form1.deposit_amount }}
+                                    <label for="{{ depositForm.name }}">{{ depositForm.label }}</label>
+                                    {{form.deposit_amount.label }} {{ depositForm.deposit_amount }}
                                 </div>
                                 <button type="submit" class="btn btn-default btn-info btn-sm">
                                     <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Fyll på med
@@ -78,7 +78,7 @@
 
                         </td>
                         <td>
-                            <form action="{{ person.id }}/delete/" method="post">
+                            <form action="{% url 'liste:delete' person.id %}" method="post">
                                 {% csrf_token %}
                                 <button  class="btn btn-default btn-danger btn-xs" type="submit">
                                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Slett

@@ -11,16 +11,16 @@ def index(request):
     persons = Person.objects.all().order_by('-name')
     context = {
         'persons': persons,
-        'form1': DepositForm(),
-        'formAdd': AddNameForm()
+        'depositForm': DepositForm(),
+        'addForm': AddNameForm()
     }
     return render(request, 'brus/index.html', context)
 
 
 @login_required
 def detail(request, name_id):
-    navn = Person.objects.get(id=name_id).name
-    return HttpResponse("Navn %s: %s" % (name_id, navn))
+    name = Person.objects.get(id=name_id).name
+    return HttpResponse("Navn %s: %s" % (name_id, name))
 
 
 @login_required
