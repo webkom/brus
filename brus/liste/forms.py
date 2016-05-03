@@ -1,4 +1,6 @@
 from django import forms
+from django.forms import ModelForm
+from .models import Person
 
 
 class DepositForm(forms.Form):
@@ -7,7 +9,7 @@ class DepositForm(forms.Form):
                                                                         'placeholder': 'kr.'}))
 
 
-class AddNameForm(forms.Form):
-    add_person = forms.CharField(label='', max_length=20,
-                                 widget=forms.TextInput(attrs={'class': 'form-control',
-                                                               'placeholder': 'Navn'}))
+class AddPersonForm(ModelForm):
+    class Meta:
+        model = Person
+        fields = ['name', 'balance']

@@ -10,7 +10,7 @@ class Brus(models.Model):
 
 
 class Person(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     balance = models.IntegerField(default=0)
 
     def setName(self, name):
