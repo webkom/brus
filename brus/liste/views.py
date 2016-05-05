@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
-from .forms import AddNameForm, DepositForm
+from .forms import AddPersonForm, DepositForm
 from .models import Brus, Person
 
 
@@ -12,7 +12,7 @@ def index(request):
     context = {
         'persons': persons,
         'depositForm': DepositForm(),
-        'addForm': AddNameForm()
+        'addForm': AddPersonForm()
     }
     return render(request, 'brus/index.html', context)
 
@@ -38,14 +38,18 @@ def pay(request, name_id):
 
 @login_required
 def deposit(request, name_id):
-    person = Person.objects.get(id=name_id)
-    person.deposit_money(int(request.POST.get('deposit_amount')))
+    form = DepositForm(request.POST)
+    if form.is_valid():
+        person = Person.objects.get(id=name_id)
+        person.deposit_money(form.cleaned_data['deposit_amount'])
     return HttpResponseRedirect("/")
 
 
 @login_required
 def addPerson(request):
-    Person.objects.create(name=request.POST.get('add_person'))
+    form = AddPersonForm(request.POST)
+    if form.is_valid():
+        form.save()
     return HttpResponseRedirect("/")
 
 

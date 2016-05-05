@@ -24,15 +24,15 @@
         <button class="btn btn-default btn-danger btn-sm" type="submit"> Logg ut </button>
     </form>
     </div>
-    <div >
+    <div>
         <ul class="text-center">
             <h3 class="panel-heading"> Legg til person i bruslista: </h3>
-            <li >
+            <li>
                 <form class="form-inline"  action="{% url 'liste:add' %}" method="post">
                     {% csrf_token %}
                     {{ addForm|crispy }}
                     <button class="btn btn-default btn-info btn-sm">
-                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span> add
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Add
                     </button>
                 </form>
             </li>
