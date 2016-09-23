@@ -32,7 +32,7 @@ def penger(request, name_id):
 @login_required
 def pay(request, name_id):
     person = Person.objects.get(id=name_id)
-    person.withdraw_money(15)
+    person.withdraw_money(16)
     return HttpResponseRedirect("/")
 
 
