@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
 from .forms import AddPersonForm, DepositForm
-from .models import Brus, Person
+from .models import Person
 
 
 @login_required
@@ -21,12 +21,6 @@ def index(request):
 def detail(request, name_id):
     name = Person.objects.get(id=name_id).name
     return HttpResponse("Navn %s: %s" % (name_id, name))
-
-
-@login_required
-def penger(request, name_id):
-    money = Brus.objects.get(id=name_id).money
-    return HttpResponse("This is how much money you've got: %s" % money)
 
 
 @login_required

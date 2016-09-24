@@ -1,14 +1,5 @@
 from django.db import models
 
-
-class Brus(models.Model):
-    soda = models.CharField(max_length=20)
-    cost = models.IntegerField(default=16)
-
-    def __str__(self):
-        return '%s %s' % (self.soda, self.cost)
-
-
 class Person(models.Model):
     name = models.CharField(max_length=50, unique=True)
     balance = models.IntegerField(default=0)
