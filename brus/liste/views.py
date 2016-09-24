@@ -12,7 +12,7 @@ def index(request):
     context = {
         'persons': persons,
         'depositForm': DepositForm(),
-        'addForm': AdPersonForm()
+        'addForm': AddPersonForm()
     }
     return render(request, 'brus/index.html', context)
 
