@@ -51,9 +51,3 @@ def addPerson(request):
     if form.is_valid():
         form.save()
     return HttpResponseRedirect("/")
-
-
-@login_required
-def deletePerson(request, name_id):
-    Person.objects.get(id=name_id).delete()
-    return HttpResponseRedirect("/")

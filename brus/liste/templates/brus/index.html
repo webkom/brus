@@ -44,7 +44,6 @@
                         <th> Balanse </th>
                         <th width="150px"> Kjøp </th>
                         <th> Fyll på </th>
-                        <th> Slett person</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -76,16 +75,7 @@
                             </form>
 
                         </td>
-                        <td>
-                            <form action="{% url 'liste:delete' person.id %}" method="post">
-                                {% csrf_token %}
-                                <button  class="btn btn-default btn-danger btn-xs" type="submit">
-                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Slett
-                                </button>
-                            </form>
-                        </td>
                     </tr>
-
                 {% endfor %}
                 {% else %}
                     <tr>
