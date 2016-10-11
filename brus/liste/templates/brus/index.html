@@ -63,7 +63,7 @@
 
                 {% for person in persons %}
                     <tr>
-                        <td> {{ person.name }} </td>
+                        <td> <a class="person" href="/{{ person.id }}/transactions/">{{ person.name }}</a> </td>
                         <td> {{ person.balance }} </td>
                         <td>
                             <form action="{% url 'liste:pay' person.id %}" method="post">
