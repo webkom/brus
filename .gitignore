@@ -60,3 +60,4 @@ venv/
 brus/settings/local.py
 brus/db.sqlite
 celerybeat.pid
+files/
