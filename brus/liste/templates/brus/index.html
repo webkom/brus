@@ -17,12 +17,12 @@
     <link rel="stylesheet" href="{% static 'liste/myCSS.css' %}">
 </head>
 <body>
-<div class="container" style="font-family: sans-serif">
+<div class="container mycontainer" style="font-family: sans-serif">
 <div class="header page-header">
     <div></div>
     <div class="headerText">
         <img src="{% static "images/webkom.png" %}" class="webkom_image img-responsive" >
-        <h1 class="text-center "> Brusliste for webkom. </h1>
+        <h1 class="text-center myHeader"> Brusliste for webkom. </h1>
     </div>
     <div class="loggut-button">
         <form class="slett-button" method="post" action="{% url 'logout' %}">
@@ -31,68 +31,68 @@
         </form>
     </div>
 </div>
-<div class="row">
-    <div>
-        <h3 class="text-center"> Legg til person i bruslista: </h3>
-        <ul class="text-center">
-            <li>
-                <form class="form-inline asd"  action="{% url 'liste:add' %}" method="post">
-                    {% csrf_token %}
-                    {{ addForm|crispy }}
-                    <div class="add-button">
-                        <button class="btn btn-default btn-info btn-sm" >
-                            <span class="glyphicon glyphicon-user" aria-hidden="true" ></span> Add
-                        </button>
-                    </div>
-                </form>
-            </li>
-        </ul>
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th> Personer </th>
-                        <th> Balanse </th>
-                        <th width="150px"> Kjøp </th>
-                        <th> Fyll på </th>
-                    </tr>
-                </thead>
-                <tbody>
+<div class="row myrow ">
+    <h3 class="text-center"> Legg til person i bruslista: </h3>
+    <ul class="text-center">
+        <li>
+            <form class="form-inline asd"  action="{% url 'liste:add' %}" method="post">
+                {% csrf_token %}
+                {{ addForm|crispy }}
+                <div class="add-button">
+                    <button class="btn btn-default btn-info btn-sm" >
+                        <span class="glyphicon glyphicon-user" aria-hidden="true" ></span> Add
+                    </button>
+                </div>
+            </form>
+        </li>
+    </ul>
+    <div class="table-responsive trans_table">
+        <table class="table table-hover">
+            <colgroup>
+                <col span="4" align="justify" >
+            </colgroup>
+            <thead>
+                <tr>
+                    <th width="22%"> Personer </th>
+                    <th width="22%"> Balanse </th>
+                    <th width="22%"> Kjøp </th>
+                    <th width="34%"> Fyll på </th>
+                </tr>
+            </thead>
+            <tbody>
 
-                {% if persons %}
+            {% if persons %}
 
-                {% for person in persons %}
-                    <tr>
-                        <td> <a class="person" href="/{{ person.id }}/transactions/">{{ person.name }}</a> </td>
-                        <td> {{ person.balance }} </td>
-                        <td>
-                            <form action="{% url 'liste:pay' person.id %}" method="post">
-                                {% csrf_token %}
-                                <button  class="btn btn-default  btn-sm" type="submit"> Kjøp brus </button>
-                            </form>
-                        </td>
-                        <td>
-
-                            <form class="form-inline" action="{% url 'liste:deposit' person.id %}" method="post">
-                                {% csrf_token %}
-                                <div class="form-group">
-                                    {{ depositForm.deposit_amount }}
-                                </div>
-                                <button type="submit" class="btn btn-default btn-info btn-sm">
-                                    <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Fyll på med
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                {% endfor %}
-                {% else %}
-                    <tr>
-                        <td>Ingen personer i bruslisten.</td>
-                    </tr>
-                {% endif %}
-                </tbody>
-            </table>
-        </div>
+            {% for person in persons %}
+                <tr>
+                    <td style="vertical-align: middle"> <a class="person" href="/{{ person.id }}/transactions/">{{ person.name }}</a> </td>
+                    <td style="vertical-align: middle"> {{ person.balance }} </td>
+                    <td>
+                        <form action="{% url 'liste:pay' person.id %}" method="post">
+                            {% csrf_token %}
+                            <button  class="btn btn-default  btn-sm" type="submit"> Kjøp brus </button>
+                        </form>
+                    </td>
+                    <td>
+                        <form class="form-inline" action="{% url 'liste:deposit' person.id %}" method="post">
+                            <button type="submit" class="btn btn-default btn-info btn-sm">
+                                <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Fyll på med
+                            </button>
+                            {% csrf_token %}
+                            <div class="form-group">
+                                {{ depositForm.deposit_amount }}
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            {% else %}
+                <tr>
+                    <td>Ingen personer i bruslisten.</td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
     </div>
 </div>
 </div>

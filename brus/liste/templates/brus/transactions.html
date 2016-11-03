@@ -17,13 +17,12 @@
     <link rel="stylesheet" href="{% static 'liste/myCSS.css' %}">
 </head>
 <body>
-<div class="container" style="font-family: sans-serif">
-<div class="container" style="font-family: sans-serif">
+<div class="container mycontainer" style="font-family: sans-serif">
 <div class="header page-header">
     <div></div>
     <div class="headerText">
         <img src="{% static "images/webkom.png" %}" class="webkom_image img-responsive" >
-        <h1 class="text-center "> Brusliste for webkom. </h1>
+        <h1 class="text-center myHeader"> Brusliste for webkom. </h1>
     </div>
     <div class="loggut-button">
         <form class="slett-button" method="post" action="{% url 'logout' %}">
@@ -58,21 +57,21 @@
                     </div>
                 </div>
                 <div>
-                    <h3 class="blabla"> Transaksjonene til {{ person.name }} </h3>
+                    <h3 class="name-heading"> Transaksjonene til {{ person.name }} </h3>
                 </div>
-                <table class="table table-hover">
+                <table class="table table-hover person-trans-table">
                     <thead>
                         <tr>
-                            <th>Transaksjoner</th>
                             <th>Dato</th>
+                            <th>Transaksjoner</th>
                         </tr>
                     </thead>
                     <tbody>
                     {% if transactions %}
                     {% for transaction in transactions %}
                         <tr>
-                            <td> {{ transaction.value }} </td>
                             <td> {{ transaction.date }} </td>
+                            <td> {{ transaction.value }} </td>
                         </tr>
                     {% endfor %}
                     {% else %}

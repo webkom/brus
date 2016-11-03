@@ -1,3 +1,8 @@
+
+.mycontainer {
+    min-width: 830px;
+}
+
 .header {
     display: flex;
     align-items: center;
@@ -11,6 +16,12 @@
     justify-content: center;
     color: #640000;
 }
+
+.myHeader {
+    margin-bottom: 20px;
+}
+
+
 .loggut-button {
     display: flex;
     justify-self: flex-end;
@@ -49,7 +60,29 @@
     align-items: center;
 }
 
-.blabla {
+.name-heading {
+    margin-left: 120px;
     display: flex;
     justify-content: center;
+}
+
+.mypanel {
+    display: inline;
+}
+
+
+.trans_table{
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 1000px;
+}
+
+.trans_table > .th {
+    width: 25%;
+}
+
+.person-trans-table {
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 1000px;
 }
