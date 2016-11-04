@@ -8,9 +8,13 @@ from .models import Person, Transactions
 
 @login_required
 def index(request):
-    persons = Person.objects.all().order_by('-name')
+    persons = Person.objects.all().order_by('name')
+    totalBalance = 0
+    for person in persons:
+        totalBalance += person.balance
     context = {
         'persons': persons,
+        'totalBalance': totalBalance,
         'depositForm': DepositForm(),
         'addForm': AddPersonForm()
     }
@@ -38,6 +42,7 @@ def detail(request, name_id):
 def pay(request, name_id):
     person = Person.objects.get(id=name_id)
     person.withdraw_money(16)
+    person.add_soda()
     return HttpResponseRedirect("/")
 
 
@@ -46,7 +51,9 @@ def deposit(request, name_id):
     form = DepositForm(request.POST)
     if form.is_valid():
         person = Person.objects.get(id=name_id)
-        person.deposit_money(form.cleaned_data['deposit_amount'])
+        amount = form.cleaned_data['deposit_amount']
+        if amount < 600:
+            person.deposit_money(form.cleaned_data['deposit_amount'])
 
     return HttpResponseRedirect("/")
 

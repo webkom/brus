@@ -4,7 +4,7 @@ from .models import Person
 
 
 class DepositForm(forms.Form):
-    deposit_amount = forms.IntegerField(label='kr', min_value=0,
+    deposit_amount = forms.IntegerField(label='kr',
                                         widget=forms.NumberInput(attrs={'class': 'form-control',
                                                                         'placeholder': 'kr.'}))
 
