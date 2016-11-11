@@ -1,0 +1,7 @@
+pipeline:
+    tests:
+        image: python:3.5
+        commands:
+            - pip install tox
+            - tox -e flake8
+            - tox -e isort
