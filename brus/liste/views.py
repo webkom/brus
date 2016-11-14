@@ -1,10 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from .forms import add_person_form, deposit_form
-from .models import Person, Transactions
 
 from brus.settings import SODA_COST
+
+from .forms import add_person_form, deposit_form
+from .models import Person, Transactions
 
 
 @login_required

@@ -1,4 +1,5 @@
 from django.db import models
+
 from brus.settings import SODA_COST
 
 
