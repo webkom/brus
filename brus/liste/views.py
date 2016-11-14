@@ -24,6 +24,11 @@ def index(request):
 def transactions(request, name_id):
     person = Person.objects.get(id=name_id)
     transactions = Transactions.objects.filter(person=person).order_by('-date')
+    for transaction in transactions:
+        person.balance += transaction
+        if transaction == -16:
+            person.sodasBought += 1
+
     context = {
         'depositForm': DepositForm(),
         'person': person,

@@ -6,18 +6,12 @@ class Person(models.Model):
     sodasBought = models.IntegerField(default=0)
 
     def deposit_money(self, amount):
-        self.balance += amount
         self.transactions.create(value=amount)
         self.save()
 
 
     def withdraw_money(self, amount):
-        self.balance -= amount
         self.transactions.create(value=-amount)
-        self.save()
-
-    def add_soda(self):
-        self.sodasBought += 1
         self.save()
 
     def get_balance(self):
@@ -27,7 +21,7 @@ class Person(models.Model):
         return self.sodasBought
 
     def __str__(self):
-        return '%s %s %s %s' % (self.name, self.balance, self.transactions, self.sodasBought)
+        return '%s %s' % (self.name, self.balance)
 
 class Transactions(models.Model):
     person = models.ForeignKey(Person, related_name='transactions')
