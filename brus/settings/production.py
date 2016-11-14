@@ -2,6 +2,7 @@ import os
 
 import environ
 import raven
+
 from brus.settings import AUTHENTICATION_BACKENDS, BASE_DIR, INSTALLED_APPS, MIDDLEWARE_CLASSES
 
 env = environ.Env(
