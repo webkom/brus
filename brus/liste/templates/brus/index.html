@@ -37,7 +37,7 @@
         <li>
             <form class="form-inline asd"  action="{% url 'liste:add' %}" method="post">
                 {% csrf_token %}
-                {{ addForm|crispy }}
+                {{ add_person_form|crispy }}
                 <div class="add-button">
                     <button class="btn btn-default btn-info btn-sm" >
                         <span class="glyphicon glyphicon-user" aria-hidden="true" ></span> Add
@@ -80,7 +80,7 @@
                             </button>
                             {% csrf_token %}
                             <div class="form-group">
-                                {{ depositForm.deposit_amount }}
+                                {{ deposit_form.deposit_amount }}
                             </div>
                         </form>
                     </td>
@@ -92,7 +92,7 @@
                 </tr>
             {% endif %}
             <tr>
-                <td>Balanse: {{ totalBalance }} kr</td>
+                <td>Balanse: {{ total_balance }} kr</td>
                 <td></td>
                 <td></td>
                 <td></td>

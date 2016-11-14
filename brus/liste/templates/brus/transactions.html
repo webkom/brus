@@ -48,7 +48,7 @@
                         <form class="form-inline" action="{% url 'liste:depositFromTransactions' person.id %}" method="post">
                             {% csrf_token %}
                             <div class="form-group">
-                                {{ depositForm.deposit_amount }}
+                                {{ deposit_form.deposit_amount }}
                             </div>
                             <button type="submit" class="btn btn-default btn-info btn-sm">
                                 <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Fyll på med
@@ -80,7 +80,7 @@
                         </tr>
                     {% endif %}
                     <tr>
-                        <td>Antall brus kjøpt: {{ person.sodasBought }}</td>
+                        <td>Antall brus kjøpt: {{ person.sodas_bought }}</td>
                         <td></td>
                     </tr>
                     </tbody>
