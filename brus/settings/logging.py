@@ -1,9 +1,4 @@
-import socket
-
 from . import TESTING
-
-hostname = socket.gethostname()
-
 
 LOGGING = {
     'version': 1,
@@ -29,8 +24,7 @@ LOGGING = {
             'format': '%(levelname)s %(asctime)s [%(name)s] %(message)s'
         },
         'syslog': {
-            'format': '{hostname} brus[%(process)d]: [%(name)s] %(message)s'.format(
-                hostname=hostname)
+            'format': 'brus[%(process)d]: [%(name)s] %(message)s'
         }
     },
     'handlers': {

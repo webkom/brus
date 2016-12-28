@@ -1,7 +1,6 @@
 import os
 
 import environ
-import raven
 
 from brus.settings import AUTHENTICATION_BACKENDS, BASE_DIR, INSTALLED_APPS, MIDDLEWARE_CLASSES
 
@@ -33,7 +32,6 @@ SENTRY_CLIENT = 'raven.contrib.django.raven_compat.DjangoClient'
 SENTRY_DSN = env('SENTRY')
 RAVEN_CONFIG = {
     'dsn': SENTRY_DSN,
-    'release': raven.fetch_git_sha(os.path.dirname(BASE_DIR)),
 }
 INSTALLED_APPS += [
     'raven.contrib.django.raven_compat',
