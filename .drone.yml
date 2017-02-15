@@ -1,7 +1,15 @@
 pipeline:
-    tests:
-        image: python:3.5
-        commands:
-            - pip install tox
-            - tox -e flake8
-            - tox -e isort
+  tests:
+    image: python:3.6
+    commands:
+      - pip install tox
+      - tox -e flake8
+      - tox -e isort
+
+  docker:
+    image: plugins/docker
+    when:
+      branch: master
+      event: push
+    repo: abakus/brus
+    tag: latest
