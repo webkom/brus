@@ -16,7 +16,7 @@ LOGGING = {
         },
     },
     'root': {
-        'level': 'DEBUG',
+        'level': 'INFO',
         'handlers': ['sentry', 'console', 'syslog'],
     },
     'formatters': {
@@ -70,6 +70,10 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': True,
             'filters': ['require_debug_true'],
+        },
+        'django.template': {
+            'level': 'CRITICAL',
+            'propagate': False,
         }
     },
 }
