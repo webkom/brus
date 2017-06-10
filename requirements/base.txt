@@ -3,6 +3,6 @@ django-auth-abakus==1.1.0
 django-crispy-forms==1.6.1
 psycopg2==2.6.2
 django-environ==0.4.1
-raven==5.32.0
+raven==6.1.0
 djangorestframework==3.5.4
 djangorestframework-camel-case==0.2.0
