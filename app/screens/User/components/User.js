@@ -24,7 +24,9 @@ export default class User extends Component {
       <div>
         <h2>{this.state.name}</h2>
         <div>
-          Current balance: <span className={getValueClass(this.state.balance)}>{this.state.balance},-</span><br/>
+          Current balance: <span className={
+            getValueClass(this.state.balance)}>{this.state.balance
+            },-</span><br/>
           Sodas bought: {this.state.nSodas}
         </div>
         <table>
@@ -40,7 +42,9 @@ export default class User extends Component {
               <tr key={i++}>
                 <td>{t.date.toString()}</td>
                 <td className={getValueClass(t.value)}>{t.value},-</td>
-                {ADMIN && <td className="delete"><button className="delete">X</button></td>}
+                {ADMIN && <td className="delete">
+                  <button className="delete">X</button>
+                </td>}
               </tr>
             ))}
           </tbody>

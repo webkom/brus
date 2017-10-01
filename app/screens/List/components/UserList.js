@@ -34,10 +34,14 @@ export default class UserList extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.users.map(u => (<User key={u.id} userId={u.id} name={u.name} balance={u.balance} />))}
+            {this.state.users.map(u => (
+              <User key={u.id} userId={u.id}
+              name={u.name} balance={u.balance} />))}
             <tr>
               <td>Total balance</td>
-              <td className={getValueClass(this.state.balance)}>{this.state.balance},-</td>
+              <td className={getValueClass(this.state.balance)}>
+                {this.state.balance},-
+                </td>
               <td></td>
               <td></td>
             </tr>
