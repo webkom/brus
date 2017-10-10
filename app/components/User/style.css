@@ -1,0 +1,14 @@
+
+.userProfile td, .userProfile td{
+	border-top: 0.05em dotted #333;
+}
+.userProfile div, .userProfile div{
+	padding: 0.7em;
+	margin-bottom: 0.7em;
+}
+
+.userProfile td, .userProfile th{
+	min-width: 10em;
+	width: auto;
+	padding: 0.5em;
+}

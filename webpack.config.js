@@ -2,6 +2,7 @@ const {resolve} = require('path');
 const webpack = require('webpack');
 const validate = require('webpack-validator');
 const {getIfUtils, removeEmpty} = require('webpack-config-utils');
+const combineLoaders = require('webpack-combine-loaders');
 
 module.exports = env => {
   const {ifProd, ifNotProd} = getIfUtils(env)
@@ -13,9 +14,9 @@ module.exports = env => {
       path: resolve(__dirname, './build'),
       filename: 'bundle.js',
       publicPath: '/build/',
-      pathinfo: ifNotProd(),
+      //pathinfo: ifNotProd(),
     },
-    devtool: ifProd('source-map', 'eval'),
+    //devtool: ifProd('source-map', 'eval'),
     devServer: {
       port: 8080,
       historyApiFallback: true
@@ -23,12 +24,26 @@ module.exports = env => {
     module: {
       loaders: [
         {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
-        {test: /\.css$/, loader: 'style-loader!css-loader'},
+        //{test: /\.css$/, loaders: ['style-loader', 'css-loader']},
+        {//{test: /\.css$/, loader: 'style-loader!css-loader'}
+          test: /\.css$/,
+          loader: combineLoaders([
+            {
+              loader: 'style-loader'
+            }, {
+              loader: 'css-loader',
+              query: {
+                modules: true,
+                localIdentName: '[name]__[local]___[hash:base64:5]'
+              }
+            }
+          ])
+        },
         {test: /(\.eot|\.woff2|\.woff|\.ttf|\.svg)/, loader: 'file-loader'},
       ],
     },
     plugins: removeEmpty([
-      ifProd(new webpack.optimize.DedupePlugin()),
+      /*ifProd(new webpack.optimize.DedupePlugin()),
       ifProd(new webpack.LoaderOptionsPlugin({
         minimize: true,
         debug: false,
@@ -45,7 +60,7 @@ module.exports = env => {
           screw_ie8: true, // eslint-disable-line
           warnings: false,
         },
-      })),
+      })),*/
     ])
   });
 };

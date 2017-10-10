@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import User from './User';
-import {getValueClass} from '../../../logic/logic';
+import {getValueClass} from '../../utils/utils';
 
 export default class UserList extends Component {
 
@@ -28,7 +28,7 @@ export default class UserList extends Component {
           <thead>
             <tr>
               <th>Name</th>
-              <th className="value">Balance</th>
+              <th className={getValueClass(0)}>Balance</th>
               <th>Buy</th>
               <th>Deposit</th>
             </tr>

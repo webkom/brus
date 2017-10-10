@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
-import {getValueClass} from '../../../logic/logic';
+import {getValueClass} from '../../utils/utils';
+import Deposit from '../Deposit'
 
+import styles from './user.css'
 
 const SODA_PRICE = 18;
 
@@ -20,36 +22,31 @@ export default class User extends Component {
     console.log(`User ${this.state.name} bought a soda for ${SODA_PRICE},-
       new balace ${newBalance}`);
   }
-  handleDeposit(e){
-    e.preventDefault()
-    if (!this.depositAmount.value ||  this.depositAmount.value < 0)
+  handleDeposit(amount){
+    //e.preventDefault()
+    if (!amount ||  amount < 0)
       return;
 
-    const newBalance = this.state.balance + parseInt(this.depositAmount.value);
+    const newBalance = this.state.balance + amount;
 
     this.setState({balance:newBalance});
-    console.log(`User ${this.state.name} deposited ${this.depositAmount.value},
-      new balance: ${newBalance}`);//TODO: logger feil balanse
+    console.log(`User ${this.state.name} deposited ${amount},
+      new balance: ${newBalance}`);
 
   }
   render() {
     return (
-      <tr>
+      <tr className={styles.row}>
         <td><a href={"/user/"+this.props.userId}>{this.state.name}</a></td>
         <td className={getValueClass(this.state.balance)}>
           {this.state.balance},-
         </td>
         <td>
-          <button className="btnWithraw"
+          <button className={styles.withraw}
             onClick={this.handleBuySoda}>Buy soda</button>
         </td>
         <td>
-          <form role="form" onSubmit={this.handleDeposit}>
-            <input type="number"
-              ref={ref => (this.depositAmount = ref)}
-              className="inpDeposit"/>
-            <button type="submit" className="btnDeposit">Deposit</button>
-          </form>
+          <Deposit onDeposit={this.handleDeposit} />
         </td>
       </tr>
     );

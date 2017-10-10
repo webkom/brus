@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import Header from '../List/components/Header';
-import User from './components/User';
+import Header from '../Header';
+import User from './User';
 import testData from '../../../testData';
+
+import styles from './style.css'
 
 export default class UserProfile extends Component {
   constructor(props){//TODO: fix teit løsning
@@ -20,7 +22,7 @@ export default class UserProfile extends Component {
 
   render() {
     return (
-      <div className="divUser">
+      <div className={styles.userProfile}>
         <Header />
         {this.state.userData && <User data={this.state.userData} />}
       </div>

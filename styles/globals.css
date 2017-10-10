@@ -1,0 +1,34 @@
+body {
+	color: var(--abakus-grey-dark);
+	background-color: var(--abakus-grey);
+	padding: 3em;
+	text-align: left;
+	font-family: sans-serif;
+	font-weight: lighter;
+}
+#container {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	margin: auto;
+	background-color: #FFF;
+	padding: 3em;
+	border-radius: 0.8em;
+	box-shadow: 0.5em 0.6em 0.2em var(--abakus-grey-dark);
+	width: 50em;
+}
+
+button, input {
+	border-radius: 0.2em;
+	border: 0.1em solid var(--abakus-grey);
+	padding: 0.3em;
+}
+
+a {
+	color: var(--abakus-grey);
+	text-decoration: none;
+}
+
+a:hover {
+	font-weight: bold;
+}

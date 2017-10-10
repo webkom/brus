@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "webpack-dev-server --inline --content-base ./ --env.dev",
     "start": "http-server",
+    "build": "webpack --env.prod",
     "setup": "npm install"
   },
   "repository": {
@@ -34,10 +35,11 @@
     "chai": "3.5.0",
     "chai-enzyme": "0.5.0",
     "cross-env": "2.0.0",
-    "css-loader": "0.23.1",
+    "css-loader": "^0.23.1",
     "enzyme": "2.4.1",
     "eslint": "3.2.2",
     "eslint-config-kentcdodds": "^9.0.2",
+    "extract-text-webpack-plugin": "^3.0.1",
     "file-loader": "0.9.0",
     "http-server": "0.9.0",
     "jsdom": "9.4.1",
@@ -51,8 +53,9 @@
     "sinon": "1.17.5",
     "sinon-chai": "2.8.0",
     "starwars-names": "1.6.0",
-    "style-loader": "^0.13.0",
+    "style-loader": "^0.13.2",
     "webpack": "2.1.0-beta.20",
+    "webpack-combine-loaders": "^2.0.3",
     "webpack-config-utils": "2.0.0",
     "webpack-dev-server": "2.1.0-beta.0",
     "webpack-validator": "2.2.7"

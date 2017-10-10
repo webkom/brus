@@ -1,17 +1,19 @@
 import React, {Component} from 'react';
-import {addUser} from '../../../../testData';
+import {addUser} from '../../../testData';
+
+import styles from './adduser.css'
 
 export default class AddUser extends Component {
   constructor(props){
     super(props);
 
-    this.state = {}
+    this.state = {};
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(e){//Hvorfor ikke vanlig metode? argument?
+  handleSubmit(e){
     e.preventDefault();
 
     if (!this.state.name)
@@ -31,7 +33,7 @@ export default class AddUser extends Component {
 
   render() {
     return (
-      <div>
+      <div className={styles.div}>
         <h2>Add user</h2>
         <form role='form' onSubmit={this.handleSubmit}>
           <input name="name" type='text'
@@ -41,8 +43,8 @@ export default class AddUser extends Component {
           <input name="balance" type='number'
             value={this.state.balance || ""}
             onChange={this.handleChange}
-            placeholder='Balance' className="inpBalance" />
-          <button type='submit' className="btnDeposit">
+            placeholder='Balance' className={styles.balance} />
+          <button type='submit' className={styles.button}>
             Add
           </button>
         </form>

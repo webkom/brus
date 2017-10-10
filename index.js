@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, browserHistory } from 'react-router';
-import User from './app/screens/User';
-import List from './app/screens/List';
+import User from './app/components/User';
+import List from './app/components/UserList';
 //import 'bootstrap/dist/css/bootstrap.min.css';
-import './assets/styles.css';
+
+
 
 ReactDOM.render(
   <Router history={browserHistory}>

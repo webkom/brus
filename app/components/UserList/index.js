@@ -1,15 +1,19 @@
 import React, {Component} from 'react';
-import Header from './components/Header';
-import AddUser from './components/AddUser';
-import UserList from './components/UserList';
-import {calculateBalance} from '../../logic/logic';
+import Header from '../Header';
+import AddUser from './AddUser';
+import UserList from './UserList';
+import {calculateBalance} from '../../utils/utils';
 import testData from '../../../testData';
 
+import styles from './style.css'
+
 export default class List extends Component {
+
+
   render() {
     testData.users.map(u => (calculateBalance(u)));
     return (
-      <div className="divList">
+      <div className={styles.list}>
         <Header />
         <AddUser />
         <UserList users={testData.users} />

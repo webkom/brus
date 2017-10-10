@@ -1,0 +1,6 @@
+
+th.delete{
+	width: 3em;
+	display: flex;
+	flex-direction: row-reverse;
+}

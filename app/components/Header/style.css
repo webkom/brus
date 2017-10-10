@@ -1,0 +1,12 @@
+
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+
+}
+.header h1{
+	font-weight: lighter;
+	font-size: 3em;
+}

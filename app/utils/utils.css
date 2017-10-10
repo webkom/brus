@@ -1,0 +1,7 @@
+
+.value, .valueNegative{
+	text-align: right;
+}
+.valueNegative{
+	color: var(--abakus-red);
+}

@@ -1,0 +1,14 @@
+
+.list td, .list td{
+	border-top: 0.05em dotted #333;
+}
+.list div, .list div{
+	padding: 0.7em;
+	margin-bottom: 0.7em;
+}
+
+.list td, .list th{
+	min-width: 10em;
+	width: auto;
+	padding: 0.5em;
+}

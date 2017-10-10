@@ -1,0 +1,16 @@
+.withraw {
+	background-color: var(--abakus-red);
+	color: #111;
+}
+.withraw:hover {
+	background-color: var(--color-red-1);
+}
+
+.row:hover {
+	background-color: var(--abakus-grey-light);
+}
+
+.row td {
+	margin: 0px;
+
+}

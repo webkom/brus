@@ -1,0 +1,12 @@
+
+.input {
+	width: 5em;
+}
+
+.button {
+	background-color: var(--color-green-4);
+	color: #000;
+}
+.button:hover {
+	background-color: var(--color-green-2);
+}
