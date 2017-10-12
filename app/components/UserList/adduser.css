@@ -15,9 +15,9 @@
 
 
 .button {
-	background-color: var(--color-green-4);
-	color: #000;
+	background-color: var(--brus-green);
 }
 .button:hover {
-	background-color: var(--color-green-2);
+	background-color: var(--brus-green-dark);
+	transition: background-color var(--transition-short);
 }

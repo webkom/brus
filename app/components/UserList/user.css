@@ -3,11 +3,13 @@
 	color: #111;
 }
 .withraw:hover {
-	background-color: var(--color-red-1);
+	background-color: var(--abakus-red-dark);
+	transition: background-color var(--transition-short);
 }
 
 .row:hover {
 	background-color: var(--abakus-grey-light);
+	transition: background-color var(--transition-short);
 }
 
 .row td {

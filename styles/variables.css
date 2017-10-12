@@ -1,9 +1,16 @@
 :root {
   --abakus-grey: #525251;
   --abakus-grey-dark: #343434;
-  --abakus-grey-light: #DEDEDB;
+  --abakus-grey-light: #EAEAEA;
   --abakus-red: #fc0505;
   --abakus-red-dark: #b10200;
+
+  --brus-green: #04CA04;
+  --brus-green-dark: #089608;
+
+  --transition-short: 0.2s;
+  --transition: 0.5s;
+  --transition-long: 1s;
 
   --lego-background-color: linear-gradient(0deg, #f4f4f4, #eae9e8);
   --lego-font-color: #394b59;

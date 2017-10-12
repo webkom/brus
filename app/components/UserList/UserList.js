@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import User from './User';
 import {getValueClass} from '../../utils/utils';
 
+import styles from './userlist.css'
+
 export default class UserList extends Component {
 
   constructor(props){
@@ -24,7 +26,7 @@ export default class UserList extends Component {
   render() {
     return (
       <div>
-        <table>
+        <table className={styles.table}>
           <thead>
             <tr>
               <th>Name</th>

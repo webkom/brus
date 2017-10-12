@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {calculateBalance, getValueClass} from '../../utils/utils.js';
 import TransactionList from '../TransactionList'
+import Deposit from '../Deposit'
 
 import styles from './user.css'
 
@@ -23,12 +24,15 @@ export default class User extends Component {
     return (
       <div>
         <h2 className={styles.name}>{this.state.name}</h2>
-        <div>
-          Current balance:
-          <span className={getValueClass(this.state.balance)}>
-            {this.state.balance},-
-          </span><br/>
-          Sodas bought: {this.state.nSodas}
+        <div className={styles.spacing}>
+          <div>
+            Current balance:
+            <span className={getValueClass(this.state.balance)}>
+              {this.state.balance},-
+            </span><br/>
+            Sodas bought: {this.state.nSodas}
+          </div>
+          <Deposit />
         </div>
         <TransactionList transactions={this.state.transactions} />
         <a href="/list">Back</a>

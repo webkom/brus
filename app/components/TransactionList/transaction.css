@@ -1,13 +1,13 @@
 
-td.delete{
-	width: 3em;
-	display: flex;
-	flex-direction: row-reverse;
+.delete{
+	text-align: center;
 }
-.delete button {
-	background-color: inherit;
-	border: none;
-	color: #FF0000;
-	font-weight: 550;
-	font-size: 1.05em;
+.delete span {
+	color: var(--abakus-red);
+}
+
+.delete span:hover{
+	font-weight: bold;
+	color: var(--abakus-red-dark);
+	cursor: pointer;
 }

@@ -3,7 +3,6 @@ import {calculateBalance, getValueClass} from '../../utils/utils.js';
 
 import styles from './transaction.css'
 
-const ADMIN = true;//tmp
 
 export default class Transaction extends Component {
   render(){
@@ -13,8 +12,8 @@ export default class Transaction extends Component {
         <td className={getValueClass(this.props.data.value)}>
           {this.props.data.value},-
         </td>
-        {ADMIN && <td className={styles.delete}>
-          <button className="delete">X</button>
+        {this.props.admin && <td className={styles.delete}>
+          <span onClick={e => (this.props.onDeleteTransaction(this.props.id))}>X</span>
         </td>}
       </tr>
     );

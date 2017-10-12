@@ -1,6 +1,13 @@
 
-th.delete{
-	width: 3em;
-	display: flex;
-	flex-direction: row-reverse;
+.delete {
+	text-align: right;
+}
+
+.table {
+  border-collapse: collapse;
+  margin: auto;
+}
+
+.table td:first-child, .table th:first-child {
+	width: 100%;
 }

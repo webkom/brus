@@ -22,6 +22,7 @@ export default class Deposit extends Component {
     return (
       <form role="form" onSubmit={this.handleDeposit}>
         <input type="number"
+          min="0"
           ref={ref => (this.depositAmount = ref)}
           className={styles.input}/>
         <button type="submit" className={styles.button}>Deposit</button>

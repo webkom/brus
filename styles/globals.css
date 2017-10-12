@@ -1,27 +1,32 @@
 body {
 	color: var(--abakus-grey-dark);
 	background-color: var(--abakus-grey);
-	padding: 3em;
+	padding: 30px;
 	text-align: left;
 	font-family: sans-serif;
-	font-weight: lighter;
 }
+
 #container {
 	display: flex;
 	align-items: center;
 	flex-direction: column;
 	margin: auto;
 	background-color: #FFF;
-	padding: 3em;
-	border-radius: 0.8em;
-	box-shadow: 0.5em 0.6em 0.2em var(--abakus-grey-dark);
-	width: 50em;
+	padding: 80px;
+	border-radius: 10px;
+	box-shadow: 7px 9px 5px var(--abakus-grey-dark);
+	width: 45em;
+}
+
+#container div{
+	padding: 7px;
+	margin-bottom: 7px;
 }
 
 button, input {
-	border-radius: 0.2em;
-	border: 0.1em solid var(--abakus-grey);
-	padding: 0.3em;
+	border-radius: 2px;
+	border: 1px solid var(--abakus-grey);
+	padding: 4px;
 }
 
 a {
