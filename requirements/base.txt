@@ -1,6 +1,6 @@
 Django==1.11.1
 django-auth-abakus==1.1.0
-django-crispy-forms==1.6.1
+django-crispy-forms==1.7.0
 django-environ==0.4.3
 psycopg2==2.7.1
 djangorestframework==3.6.3
