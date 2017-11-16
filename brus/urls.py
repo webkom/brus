@@ -9,5 +9,6 @@ urlpatterns = [
     url(r'^', include('brus.liste.urls', namespace='liste')),
     url(r'^accounts/login', auth_views.login, name='login'),
     url(r'^accounts/logout', auth_views.logout, {'next_page': '/'}, name='logout'),
-    url(r'^api/', include(api_router.urls, namespace='api'))
+    url(r'^api/', include(api_router.urls, namespace='api')),
+    url('', include('social_django.urls', namespace='social'))
 ]
