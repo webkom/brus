@@ -1,4 +1,4 @@
-Django==1.11.1
+Django==1.11.7
 django-auth-abakus==1.1.0
 django-crispy-forms==1.6.1
 django-environ==0.4.3
@@ -6,3 +6,4 @@ psycopg2==2.7.1
 djangorestframework==3.6.3
 raven==6.1.0
 djangorestframework-camel-case==0.2.0
+social-auth-app-django==2.0.0

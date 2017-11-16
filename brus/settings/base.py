@@ -18,11 +18,13 @@ INSTALLED_APPS = [
     'crispy_forms',
     'rest_framework',
     'rest_framework.authtoken',
+    'social_django',
 
     'brus.liste',
 ]
 
 LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/login/lego/'
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',

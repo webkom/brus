@@ -19,14 +19,6 @@ DATABASES = {
     'default': env.db()
 }
 
-ABAKUS_TOKEN = env('ABAKUS_TOKEN')
-
-AUTHENTICATION_BACKENDS = (
-    'abakus.auth.AbakusBackend',
-) + AUTHENTICATION_BACKENDS
-
-ABAKUS_GROUP_REQUIRED = ['Webkom']
-
 # Sentry
 SENTRY_CLIENT = 'raven.contrib.django.raven_compat.DjangoClient'
 SENTRY_DSN = env('SENTRY')
@@ -39,3 +31,12 @@ INSTALLED_APPS += [
 MIDDLEWARE_CLASSES = [
     'raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware',
 ] + MIDDLEWARE_CLASSES
+
+AUTHENTICATION_BACKENDS = (
+    'brus.oauth.LegoOAuth2',
+) + AUTHENTICATION_BACKENDS
+
+SOCIAL_AUTH_LEGO_KEY = env('AUTH_LEGO_KEY')
+SOCIAL_AUTH_LEGO_SECRET = env('AUTH_LEGO_SECRET')
+SOCIAL_AUTH_LEGO_API_URL = env('AUTH_LEGO_API_URL')
+SOCIAL_AUTH_LEGO_REQUIRED_GROUP = env('AUTH_LEGO_REQUIRED_GROUP')
