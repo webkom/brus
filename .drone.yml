@@ -9,7 +9,10 @@ pipeline:
   docker:
     image: plugins/docker
     when:
-      branch: master
-      event: push
+      branch:
+        - master
     repo: abakus/brus
-    tag: latest
+    secrets: [ docker_username, docker_password ]
+    tags:
+      - ${DRONE_BRANCH}-${DRONE_COMMIT_SHA:0:7}
+
