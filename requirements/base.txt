@@ -4,6 +4,6 @@ djangorestframework==3.7.3
 django-crispy-forms==1.7.0
 django-environ==0.4.4
 psycopg2==2.7.3
-raven==6.6.0
+raven==6.9.0
 djangorestframework-camel-case==0.2.0
 social-auth-app-django==2.0.0
