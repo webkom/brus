@@ -6,6 +6,16 @@ from brus.liste.api.serializers import PersonSerializer, PurchaseSerializer
 from brus.liste.models import Person
 
 
+def purchase_soda(name, soda_cost):
+    try:
+        person = Person.objects.get(name=name)
+        person.withdraw_money(soda_cost)
+        result_serializer = PersonSerializer(person)
+        return Response(result_serializer.data, status=status.HTTP_201_CREATED)
+    except (Person.DoesNotExist, Person.MultipleObjectsReturned):
+        raise exceptions.NotFound
+
+
 class ListeViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
 
     queryset = Person.objects.all()
@@ -14,15 +24,15 @@ class ListeViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.Ge
     lookup_url_regex = r'[/w/s]+'
 
     @decorators.list_route(methods=['POST'], serializer_class=PurchaseSerializer)
-    def purchase(self, request):
+    def purchase_bottle(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         name = serializer.validated_data['name']
+        return purchase_soda(name, soda_cost=settings.SODA_COST_BOTTLE)
 
-        try:
-            person = Person.objects.get(name=name)
-            person.withdraw_money(settings.SODA_COST)
-            result_serializer = PersonSerializer(person)
-            return Response(result_serializer.data, status=status.HTTP_201_CREATED)
-        except (Person.DoesNotExist, Person.MultipleObjectsReturned):
-            raise exceptions.NotFound
+    @decorators.list_route(methods=['POST'], serializer_class=PurchaseSerializer)
+    def purchase_can(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        name = serializer.validated_data['name']
+        return purchase_soda(name, soda_cost=settings.SODA_COST_CAN)

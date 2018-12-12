@@ -5,13 +5,15 @@ from .models import Person
 
 
 class deposit_form(forms.Form):
-    deposit_amount = forms.IntegerField(label='kr',
+    deposit_amount = forms.DecimalField(label='kr',
                                         widget=forms.NumberInput(attrs={'class': 'form-control',
-                                                                        'placeholder': 'kr.'}))
+                                                                        'placeholder': 'kr.'}),
+                                        max_digits=6,
+                                        decimal_places=2)
 
 
 class add_person_form(ModelForm):
-    initial_balance = forms.IntegerField()
+    initial_balance = forms.DecimalField()
 
     class Meta:
         model = Person

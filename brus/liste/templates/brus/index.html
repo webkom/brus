@@ -68,9 +68,13 @@
                     <td style="vertical-align: middle"> <a class="person" href="/{{ person.id }}/transactions/">{{ person.name }}</a> </td>
                     <td style="vertical-align: middle"> {{ person.balance }} </td>
                     <td>
-                        <form action="{% url 'liste:pay' person.id %}" method="post">
+                        <form action="{% url 'liste:pay_bottle' person.id %}" method="post">
                             {% csrf_token %}
-                            <button  class="btn btn-default  btn-sm" type="submit"> Kjøp brus </button>
+                            <button  class="btn btn-default  btn-sm" type="submit"> Kjøp brus (flaske) </button>
+                        </form>
+                        <form action="{% url 'liste:pay_can' person.id %}" method="post">
+                            {% csrf_token %}
+                            <button  class="btn btn-default  btn-sm" type="submit"> Kjøp brus (boks) </button>
                         </form>
                     </td>
                     <td>

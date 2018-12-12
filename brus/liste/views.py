@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
-from brus.settings import SODA_COST
+from brus.settings import SODA_COST_BOTTLE, SODA_COST_CAN
 
 from .forms import add_person_form, deposit_form
 from .models import Person, Transactions
@@ -43,9 +43,16 @@ def detail(request, name_id):
 
 
 @login_required
-def pay(request, name_id):
+def pay_bottle(request, name_id):
     person = Person.objects.get(id=name_id)
-    person.withdraw_money(SODA_COST)
+    person.withdraw_money(SODA_COST_BOTTLE)
+    return HttpResponseRedirect("/")
+
+
+@login_required
+def pay_can(request, name_id):
+    person = Person.objects.get(id=name_id)
+    person.withdraw_money(SODA_COST_CAN)
     return HttpResponseRedirect("/")
 
 

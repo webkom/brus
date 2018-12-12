@@ -3,8 +3,9 @@ pipeline:
     image: python:3.6
     commands:
       - pip install tox
-      - tox -e flake8
       - tox -e isort
+      - tox -e flake8
+      - tox -e black
 
   docker:
     image: plugins/docker

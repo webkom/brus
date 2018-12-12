@@ -1,6 +1,6 @@
 from django.db import models
 
-from brus.settings import SODA_COST
+from brus.settings import SODA_COST_BOTTLE, SODA_COST_CAN
 
 
 class Person(models.Model):
@@ -21,10 +21,17 @@ class Person(models.Model):
             balance += transaction.value
         return balance
 
-    def sodas_bought(self):
+    def soda_bottles_bought(self):
         sodas_bought = 0
         for transaction in self.transactions.all():
-            if transaction.value == -SODA_COST:
+            if transaction.value == -SODA_COST_BOTTLE:
+                sodas_bought += 1
+        return sodas_bought
+
+    def soda_cans_bought(self):
+        sodas_bought = 0
+        for transaction in self.transactions.all():
+            if transaction.value == -SODA_COST_CAN:
                 sodas_bought += 1
         return sodas_bought
 
@@ -34,5 +41,5 @@ class Person(models.Model):
 
 class Transactions(models.Model):
     person = models.ForeignKey(Person, related_name='transactions')
-    value = models.IntegerField()
+    value = models.DecimalField(max_digits=6, decimal_places=2)
     date = models.DateTimeField(auto_now_add=True)

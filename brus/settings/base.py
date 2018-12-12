@@ -5,7 +5,8 @@ import environ
 root = environ.Path(__file__) - 2
 BASE_DIR = root()
 
-SODA_COST = 18
+SODA_COST_BOTTLE = 18
+SODA_COST_CAN = 5.45
 
 INSTALLED_APPS = [
     'django.contrib.admin',
