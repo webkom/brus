@@ -20,12 +20,11 @@ pipeline:
 
   print_receipt:
     image: plugins/webhook
-    settings:
-        urls: http://gateway.openfaas.svc.cluster.local:8080/function/faas-to-mqtt-relay/
-        debug: true
-        content_type: application/json
-        template: |
-            {
-                "topic": "printer_as_a_service/print",
-                "message": "[{ \"text\": \"Build number: #{{ build.number }}\nBuild status: {{ build.status }}\nComitter: {{ commit.author }}\nCommit message:\n{{ commit.message }}\", \"repo\": \"{{ repo.name }}\" }]"
-            }
+    urls: http://gateway.openfaas.svc.cluster.local:8080/function/faas-to-mqtt-relay/
+    debug: true
+    content_type: application/json
+    template: |
+        {
+            "topic": "printer_as_a_service/print",
+            "message": "[{ \"text\": \"Build number: #{{ build.number }}\\nBuild status: {{ build.status }}\\nComitter: {{ commit.author }}\", \"repo\": \"{{ repo.name }}\" }]"
+        }
