@@ -8,26 +8,33 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('liste', '0004_delete_brus'),
-    ]
+    dependencies = [("liste", "0004_delete_brus")]
 
     operations = [
         migrations.CreateModel(
-            name='Transactions',
+            name="Transactions",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('value', models.IntegerField()),
-                ('date', models.DateTimeField(auto_now_add=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("value", models.IntegerField()),
+                ("date", models.DateTimeField(auto_now_add=True)),
             ],
         ),
-        migrations.RemoveField(
-            model_name='person',
-            name='balance',
-        ),
+        migrations.RemoveField(model_name="person", name="balance"),
         migrations.AddField(
-            model_name='transactions',
-            name='person',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='transactions', to='liste.Person'),
+            model_name="transactions",
+            name="person",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="transactions",
+                to="liste.Person",
+            ),
         ),
     ]

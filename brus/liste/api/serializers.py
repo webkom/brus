@@ -4,10 +4,9 @@ from ..models import Person
 
 
 class PersonSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Person
-        fields = ('name', 'balance')
+        fields = ("name", "balance")
 
 
 class PurchaseSerializer(serializers.Serializer):

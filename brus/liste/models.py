@@ -36,10 +36,10 @@ class Person(models.Model):
         return sodas_bought
 
     def __str__(self):
-        return '%s %s' % (self.name, self.balance)
+        return "%s %s" % (self.name, self.balance)
 
 
 class Transactions(models.Model):
-    person = models.ForeignKey(Person, related_name='transactions')
+    person = models.ForeignKey(Person, related_name="transactions")
     value = models.DecimalField(max_digits=6, decimal_places=2)
     date = models.DateTimeField(auto_now_add=True)

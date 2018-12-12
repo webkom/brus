@@ -7,14 +7,10 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('liste', '0002_auto_20160503_0953'),
-    ]
+    dependencies = [("liste", "0002_auto_20160503_0953")]
 
     operations = [
         migrations.AlterField(
-            model_name='brus',
-            name='cost',
-            field=models.IntegerField(default=16),
-        ),
+            model_name="brus", name="cost", field=models.IntegerField(default=16)
+        )
     ]

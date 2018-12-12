@@ -7,14 +7,12 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('liste', '0005_auto_20161114_1512'),
-    ]
+    dependencies = [("liste", "0005_auto_20161114_1512")]
 
     operations = [
         migrations.AlterField(
-            model_name='transactions',
-            name='value',
+            model_name="transactions",
+            name="value",
             field=models.DecimalField(decimal_places=2, max_digits=6),
-        ),
+        )
     ]

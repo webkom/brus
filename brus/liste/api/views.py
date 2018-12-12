@@ -16,23 +16,25 @@ def purchase_soda(name, soda_cost):
         raise exceptions.NotFound
 
 
-class ListeViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+class ListeViewSet(
+    mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet
+):
 
     queryset = Person.objects.all()
     serializer_class = PersonSerializer
-    lookup_field = 'name'
-    lookup_url_regex = r'[/w/s]+'
+    lookup_field = "name"
+    lookup_url_regex = r"[/w/s]+"
 
-    @decorators.list_route(methods=['POST'], serializer_class=PurchaseSerializer)
+    @decorators.list_route(methods=["POST"], serializer_class=PurchaseSerializer)
     def purchase_bottle(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        name = serializer.validated_data['name']
+        name = serializer.validated_data["name"]
         return purchase_soda(name, soda_cost=settings.SODA_COST_BOTTLE)
 
-    @decorators.list_route(methods=['POST'], serializer_class=PurchaseSerializer)
+    @decorators.list_route(methods=["POST"], serializer_class=PurchaseSerializer)
     def purchase_can(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        name = serializer.validated_data['name']
+        name = serializer.validated_data["name"]
         return purchase_soda(name, soda_cost=settings.SODA_COST_CAN)
