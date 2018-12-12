@@ -15,12 +15,14 @@ pipeline:
     repo: abakus/brus
     secrets: [ docker_username, docker_password ]
     tags:
+      - latest
       - ${DRONE_BRANCH}-${DRONE_COMMIT_SHA:0:7}
 
   print_receipt:
     image: plugins/webhook
     settings:
         urls: http://gateway.openfaas.svc.cluster.local:8080/function/faas-to-mqtt-relay/
+        debug: true
         content_type: application/json
         template: |
             {
