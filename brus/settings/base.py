@@ -6,9 +6,9 @@ import environ
 root = environ.Path(__file__) - 2
 BASE_DIR = root()
 
-SODA_COST_BOTTLE_1 = decimal.Decimal(16.00)
-SODA_COST_BOTTLE_CURRENT = decimal.Decimal(18.00)
-SODA_COST_CAN_CURRENT = decimal.Decimal(5.45)
+SODA_COST_BOTTLE_1 = round(decimal.Decimal(16.00), 2)
+SODA_COST_BOTTLE_CURRENT = round(decimal.Decimal(18.00), 2)
+SODA_COST_CAN_CURRENT = round(decimal.Decimal(5.45), 2)
 
 INSTALLED_APPS = [
     "django.contrib.admin",
