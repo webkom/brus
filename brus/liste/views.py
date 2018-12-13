@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
 from brus.settings import SODA_COST_BOTTLE_CURRENT, SODA_COST_CAN_CURRENT
+from brus.utils import SODA_TYPE_BOTTLE, SODA_TYPE_CAN, post_notification_to_slack
 
 from .forms import add_person_form, deposit_form
 from .models import Person, Transactions
@@ -46,6 +47,7 @@ def detail(request, name_id):
 def pay_bottle(request, name_id):
     person = Person.objects.get(id=name_id)
     person.withdraw_money(SODA_COST_BOTTLE_CURRENT)
+    post_notification_to_slack(person, SODA_TYPE_BOTTLE)
     return HttpResponseRedirect("/")
 
 
@@ -53,6 +55,7 @@ def pay_bottle(request, name_id):
 def pay_can(request, name_id):
     person = Person.objects.get(id=name_id)
     person.withdraw_money(SODA_COST_CAN_CURRENT)
+    post_notification_to_slack(person, SODA_TYPE_CAN)
     return HttpResponseRedirect("/")
 
 

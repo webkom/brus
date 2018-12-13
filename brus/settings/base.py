@@ -85,6 +85,8 @@ STATIC_URL = "/static/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "files", "media")
 MEDIA_URL = "/media/"
 
+SLACK_RELAY_URL = None
+
 CRISPY_TEMPLATE_PACK = "bootstrap3"
 
 REST_FRAMEWORK = {

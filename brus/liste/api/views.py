@@ -4,13 +4,15 @@ from rest_framework.response import Response
 
 from brus.liste.api.serializers import PersonSerializer, PurchaseSerializer
 from brus.liste.models import Person
+from brus.utils import SODA_TYPE_BOTTLE, SODA_TYPE_CAN, post_notification_to_slack
 
 
-def purchase_soda(name, soda_cost):
+def purchase_soda(name, soda_type, soda_cost):
     try:
         person = Person.objects.get(name=name)
         person.withdraw_money(soda_cost)
         result_serializer = PersonSerializer(person)
+        post_notification_to_slack(person, soda_type)
         return Response(result_serializer.data, status=status.HTTP_201_CREATED)
     except (Person.DoesNotExist, Person.MultipleObjectsReturned):
         raise exceptions.NotFound
@@ -30,11 +32,17 @@ class ListeViewSet(
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         name = serializer.validated_data["name"]
-        return purchase_soda(name, soda_cost=settings.SODA_COST_BOTTLE_CURRENT)
+        return purchase_soda(
+            name,
+            soda_type=SODA_TYPE_BOTTLE,
+            soda_cost=settings.SODA_COST_BOTTLE_CURRENT,
+        )
 
     @decorators.list_route(methods=["POST"], serializer_class=PurchaseSerializer)
     def purchase_can(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         name = serializer.validated_data["name"]
-        return purchase_soda(name, soda_cost=settings.SODA_COST_CAN_CURRENT)
+        return purchase_soda(
+            name, soda_type=SODA_TYPE_CAN, soda_cost=settings.SODA_COST_CAN_CURRENT
+        )
