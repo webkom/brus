@@ -1,6 +1,10 @@
 from django.db import models
 
-from brus.settings import SODA_COST_BOTTLE, SODA_COST_CAN
+from brus.settings import (
+    SODA_COST_BOTTLE_1,
+    SODA_COST_BOTTLE_CURRENT,
+    SODA_COST_CAN_CURRENT,
+)
 
 
 class Person(models.Model):
@@ -24,14 +28,17 @@ class Person(models.Model):
     def soda_bottles_bought(self):
         sodas_bought = 0
         for transaction in self.transactions.all():
-            if transaction.value == -SODA_COST_BOTTLE:
+            if (
+                transaction.value == -SODA_COST_BOTTLE_1
+                or transaction.value == -SODA_COST_BOTTLE_CURRENT
+            ):
                 sodas_bought += 1
         return sodas_bought
 
     def soda_cans_bought(self):
         sodas_bought = 0
         for transaction in self.transactions.all():
-            if transaction.value == -SODA_COST_CAN:
+            if transaction.value == -SODA_COST_CAN_CURRENT:
                 sodas_bought += 1
         return sodas_bought
 

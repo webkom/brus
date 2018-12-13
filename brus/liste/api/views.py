@@ -30,11 +30,11 @@ class ListeViewSet(
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         name = serializer.validated_data["name"]
-        return purchase_soda(name, soda_cost=settings.SODA_COST_BOTTLE)
+        return purchase_soda(name, soda_cost=settings.SODA_COST_BOTTLE_CURRENT)
 
     @decorators.list_route(methods=["POST"], serializer_class=PurchaseSerializer)
     def purchase_can(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         name = serializer.validated_data["name"]
-        return purchase_soda(name, soda_cost=settings.SODA_COST_CAN)
+        return purchase_soda(name, soda_cost=settings.SODA_COST_CAN_CURRENT)
