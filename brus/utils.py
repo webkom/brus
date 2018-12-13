@@ -9,8 +9,9 @@ SODA_TYPE_BOTTLE = "flaske"
 def format_slack_message(person, soda_type):
     return (
         f"{person.name} har kjøpt en brus {soda_type}, {person.name} sin nye saldo er "
-        f"{person.balance}. {person.name} har kjøpt totalt "
-        f"{person.soda_bottles_bought} flasker og {person.soda_cans_bought} bokser brus."
+        f"{person.balance} kr. {person.name} har kjøpt totalt "
+        f"{str(person.soda_bottles_bought())} flasker "
+        f"og {str(person.soda_cans_bought())} bokser brus."
     )
 
 
