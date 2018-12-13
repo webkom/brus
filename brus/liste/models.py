@@ -5,6 +5,7 @@ from brus.settings import (
     SODA_COST_BOTTLE_CURRENT,
     SODA_COST_CAN_CURRENT,
 )
+from brus.utils import SODA_TYPE_BOTTLE, SODA_TYPE_CAN, post_notification_to_slack
 
 
 class Person(models.Model):
@@ -17,6 +18,11 @@ class Person(models.Model):
     def withdraw_money(self, amount):
         self.transactions.create(value=-amount)
         self.save()
+
+        if amount == SODA_COST_BOTTLE_CURRENT:
+            post_notification_to_slack(self, SODA_TYPE_BOTTLE)
+        elif amount == SODA_COST_CAN_CURRENT:
+            post_notification_to_slack(self, SODA_TYPE_CAN)
 
     @property
     def balance(self):
