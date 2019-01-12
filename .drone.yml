@@ -18,13 +18,3 @@ pipeline:
       - latest
       - ${DRONE_BRANCH}-${DRONE_COMMIT_SHA:0:7}
 
-  print_receipt:
-    image: plugins/webhook
-    urls: http://gateway.openfaas.svc.cluster.local:8080/function/faas-to-mqtt-relay/
-    debug: true
-    content_type: application/json
-    template: |
-        {
-            "topic": "printer_as_a_service/print",
-            "message": "[{ \"text\": \"Build number: #{{ build.number }}\\nBuild status: {{ build.status }}\\nComitter: {{ commit.author }}\", \"repo\": \"{{ repo.name }}\" }]"
-        }
