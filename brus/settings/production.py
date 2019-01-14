@@ -14,6 +14,7 @@ environ.Env.read_env(os.path.join(os.path.dirname(BASE_DIR), ".env"))
 
 DEBUG = env("DEBUG")
 SECRET_KEY = env("SECRET_KEY")
+FRONTEND_URL = env("FRONTEND_URL")
 ALLOWED_HOSTS = env("ALLOWED_HOSTS")
 
 # Database
@@ -37,3 +38,9 @@ SOCIAL_AUTH_LEGO_REQUIRED_GROUP = env("AUTH_LEGO_REQUIRED_GROUP")
 
 # Slack - OpenFaaS
 SLACK_RELAY_URL = env("SLACK_RELAY_URL")
+
+# CORS
+CORS_FRONTEND_URL = urlparse(FRONTEND_URL).netloc
+CORS_ORIGIN_WHITELIST = list(
+    {CORS_FRONTEND_URL, f'www.{CORS_FRONTEND_URL}', '127.0.0.1:3000', 'localhost:3000'}
+)
