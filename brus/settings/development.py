@@ -21,4 +21,4 @@ CACHES = {
     }
 }
 
-CORS_ORIGIN_WHITELIST = list({'127.0.0.1:3000', 'localhost:3000'})
+CORS_ORIGIN_WHITELIST = list({"127.0.0.1:3000", "localhost:3000"})

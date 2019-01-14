@@ -1,4 +1,5 @@
 import os
+from urllib.parse import urlparse
 
 import environ
 
@@ -42,5 +43,5 @@ SLACK_RELAY_URL = env("SLACK_RELAY_URL")
 # CORS
 CORS_FRONTEND_URL = urlparse(FRONTEND_URL).netloc
 CORS_ORIGIN_WHITELIST = list(
-    {CORS_FRONTEND_URL, f'www.{CORS_FRONTEND_URL}', '127.0.0.1:3000', 'localhost:3000'}
+    {CORS_FRONTEND_URL, f"www.{CORS_FRONTEND_URL}", "127.0.0.1:3000", "localhost:3000"}
 )
