@@ -1,5 +1,4 @@
 import os
-from urllib.parse import urlparse
 
 import environ
 
@@ -9,6 +8,7 @@ from brus.settings import (
     INSTALLED_APPS,
     MIDDLEWARE_CLASSES,
 )
+from brus.utils import generate_cors_origin_regex_list
 
 env = environ.Env(DEBUG=(bool, False), ALLOWED_HOSTS=(list, ["brus.abakus.no"]))
 environ.Env.read_env(os.path.join(os.path.dirname(BASE_DIR), ".env"))
@@ -42,15 +42,6 @@ SOCIAL_AUTH_LEGO_REQUIRED_GROUP = env("AUTH_LEGO_REQUIRED_GROUP")
 SLACK_RELAY_URL = env("SLACK_RELAY_URL")
 
 # CORS
-CORS_FRONTEND_URL = urlparse(FRONTEND_URL).netloc
-CORS_DASHBOARD_URL = urlparse(DASHBOARD_URL).netloc
-CORS_ORIGIN_WHITELIST = list(
-    {
-        CORS_FRONTEND_URL,
-        f"www.{CORS_FRONTEND_URL}",
-        CORS_DASHBOARD_URL,
-        f"www.{CORS_DASHBOARD_URL}",
-        "127.0.0.1:3000",
-        "localhost:3000",
-    }
-)
+CORS_ORIGIN_WHITELIST = ["http://127.0.0.1:3000", "http://localhost:3000"]
+CORS_ORIGIN_DOMAINS = env("CORS_ORIGIN_DOMAINS", default=["abakus.no"])
+CORS_ORIGIN_REGEX_WHITELIST = generate_cors_origin_regex_list(CORS_ORIGIN_DOMAINS)

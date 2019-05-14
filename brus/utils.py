@@ -1,9 +1,18 @@
+import re
+
 import requests
 
 from brus.settings import SLACK_RELAY_URL
 
 SODA_TYPE_CAN = "boks"
 SODA_TYPE_BOTTLE = "flaske"
+
+
+def generate_cors_origin_regex_list(domains):
+    regex_list = []
+    for domain in domains:
+        regex_list.append(r"^(https?://)?(.*\.)?{0}$".format(re.escape(domain)))
+    return regex_list
 
 
 def format_slack_message(person, soda_type):
