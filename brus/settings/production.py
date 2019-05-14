@@ -15,8 +15,6 @@ environ.Env.read_env(os.path.join(os.path.dirname(BASE_DIR), ".env"))
 
 DEBUG = env("DEBUG")
 SECRET_KEY = env("SECRET_KEY")
-FRONTEND_URL = env("FRONTEND_URL")
-DASHBOARD_URL = env("DASHBOARD_URL")
 ALLOWED_HOSTS = env("ALLOWED_HOSTS")
 
 # Database
