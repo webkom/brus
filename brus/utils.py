@@ -30,6 +30,7 @@ def post_notification_to_slack(person, soda_type):
 
     requests.post(
         SLACK_RELAY_URL,
+        timeout=10,
         json={
             "text": format_slack_message(person, soda_type),
             "username": "brus",
