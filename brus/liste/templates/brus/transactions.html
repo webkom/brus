@@ -79,13 +79,13 @@
                             <td>Du har ingen transaksjoner enda</td>
                         </tr>
                     {% endif %}
-                    <tr>
-                        <td>Antall brus (flasker) kjøpt: {{ person.soda_bottles_bought }}</td>
-                        <td>Antall brus (bokser) kjøpt: {{ person.soda_cans_bought }}</td>
-                        <td></td>
-                    </tr>
                     </tbody>
                 </table>
+                <div>
+                    {% for product_name, count in person.products_bought.items %}
+                    <p>Antall <b>{{ product_name }}</b> kjøpt: <i>{{ count }}</i> stykk</p>
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>

@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
-from brus.settings import SODA_COST_BOTTLE_CURRENT, SODA_COST_CAN_CURRENT
+from brus.settings import PRODUCT_LIST
 
 from .forms import add_person_form, deposit_form
 from .models import Person, Transactions
@@ -19,6 +19,7 @@ def index(request):
         "total_balance": total_balance,
         "deposit_form": deposit_form(),
         "add_person_form": add_person_form(),
+        "product_list": PRODUCT_LIST,
     }
     return render(request, "brus/index.html", context)
 
@@ -43,16 +44,13 @@ def detail(request, name_id):
 
 
 @login_required
-def pay_bottle(request, name_id):
+def purchase(request, name_id, product_name):
     person = Person.objects.get(id=name_id)
-    person.withdraw_money(SODA_COST_BOTTLE_CURRENT)
-    return HttpResponseRedirect("/")
+    if product_name not in PRODUCT_LIST.keys():
+        return HttpResponse(status_code=404)
 
-
-@login_required
-def pay_can(request, name_id):
-    person = Person.objects.get(id=name_id)
-    person.withdraw_money(SODA_COST_CAN_CURRENT)
+    price = PRODUCT_LIST[product_name]["current_price"]
+    person.withdraw_money(price)
     return HttpResponseRedirect("/")
 
 

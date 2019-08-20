@@ -6,6 +6,9 @@ import environ
 root = environ.Path(__file__) - 2
 BASE_DIR = root()
 
+BEER_COST_DAHLS_BOTTLE_CURRENT = round(decimal.Decimal(24.00), 2)
+BEER_COST_DAHLS_BOTTLE = (BEER_COST_DAHLS_BOTTLE_CURRENT,)
+
 SODA_COST_BOTTLE_CURRENT = round(decimal.Decimal(19.99), 2)
 SODA_COST_BOTTLE = (
     SODA_COST_BOTTLE_CURRENT,
@@ -15,6 +18,33 @@ SODA_COST_BOTTLE = (
 
 SODA_COST_CAN_CURRENT = round(decimal.Decimal(8.99), 2)
 SODA_COST_CAN = (SODA_COST_CAN_CURRENT, round(decimal.Decimal(5.45), 2))
+
+PRODUCT_TYPE_CAN = "boks"
+PRODUCT_TYPE_BOTTLE = "flaske"
+
+PRODUCT_LIST = {
+    "soda_can": {
+        "name": "Brus 0.33L Boks",
+        "type": PRODUCT_TYPE_CAN,
+        "image": "TODO",
+        "current_price": SODA_COST_CAN_CURRENT,
+        "price_history": SODA_COST_CAN,
+    },
+    "soda_bottle": {
+        "name": "Brus 0.5L Flaske",
+        "type": PRODUCT_TYPE_BOTTLE,
+        "image": "TODO",
+        "current_price": SODA_COST_BOTTLE_CURRENT,
+        "price_history": SODA_COST_BOTTLE,
+    },
+    "beer_dahls_bottle": {
+        "name": "Dahls 0.33L Flakse",
+        "type": PRODUCT_TYPE_BOTTLE,
+        "image": "TODO",
+        "current_price": BEER_COST_DAHLS_BOTTLE_CURRENT,
+        "price_history": BEER_COST_DAHLS_BOTTLE,
+    },
+}
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -93,8 +123,6 @@ STATIC_URL = "/static/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "files", "media")
 MEDIA_URL = "/media/"
 
-SLACK_RELAY_URL = None
-
 CRISPY_TEMPLATE_PACK = "bootstrap3"
 
 REST_FRAMEWORK = {
@@ -110,3 +138,6 @@ REST_FRAMEWORK = {
     ],
     "TEST_REQUEST_DEFAULT_FORMAT": "json",
 }
+
+SLACK_RELAY_URL = None
+MQTT_HOST = None
