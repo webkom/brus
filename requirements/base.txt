@@ -2,9 +2,10 @@ Django==1.11.22
 djangorestframework==3.9.4
 django-crispy-forms==1.7.0
 django-environ==0.4.5
-psycopg2==2.7.3
+psycopg2==2.7.3.2
 raven==6.3.0
 requests==2.21.0
 djangorestframework-camel-case==0.2.0
 social-auth-app-django==2.0.0
 django-cors-headers==3.0.1
+paho-mqtt==1.4.0

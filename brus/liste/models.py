@@ -1,12 +1,7 @@
 from django.db import models
 
-from brus.settings import (
-    SODA_COST_BOTTLE,
-    SODA_COST_BOTTLE_CURRENT,
-    SODA_COST_CAN,
-    SODA_COST_CAN_CURRENT,
-)
-from brus.utils import SODA_TYPE_BOTTLE, SODA_TYPE_CAN, post_notification_to_slack
+from brus.settings import PRODUCT_LIST
+from brus.utils import post_slack_notification, publish_mqtt_notification
 
 
 class Person(models.Model):
@@ -16,14 +11,16 @@ class Person(models.Model):
         self.transactions.create(value=amount)
         self.save()
 
-    def withdraw_money(self, amount):
-        self.transactions.create(value=-amount)
+    def withdraw_money(self, amount, count=1):
+        for i in range(count):
+            self.transactions.create(value=-amount)
         self.save()
 
-        if amount == SODA_COST_BOTTLE_CURRENT:
-            post_notification_to_slack(self, SODA_TYPE_BOTTLE)
-        elif amount == SODA_COST_CAN_CURRENT:
-            post_notification_to_slack(self, SODA_TYPE_CAN)
+        publish_mqtt_notification(self)
+
+        for product_name, product_data in PRODUCT_LIST.items():
+            if amount == product_data["current_price"]:
+                post_slack_notification(self, product_data["name"], count)
 
     @property
     def balance(self):
@@ -32,19 +29,29 @@ class Person(models.Model):
             balance += transaction.value
         return balance
 
-    def soda_bottles_bought(self):
-        sodas_bought = 0
-        for transaction in self.transactions.all():
-            if abs(transaction.value) in SODA_COST_BOTTLE:
-                sodas_bought += 1
-        return sodas_bought
+    def purchase_summary(self):
+        products_bought = self.products_bought()
+        summary = {}
+        for product in products_bought:
+            if product["product_type"] not in summary.keys():
+                summary[product["product_type"]] = product["count"]
+            else:
+                summary[product["product_type"]] += product["count"]
+        return summary
 
-    def soda_cans_bought(self):
-        sodas_bought = 0
+    def products_bought(self):
+        products_bought = {}
+        for product_name, product_data in PRODUCT_LIST.items():
+            products_bought[product_name] = {
+                **product_data,
+                **{"count": 0, "key": product_name},
+            }
+
         for transaction in self.transactions.all():
-            if abs(transaction.value) in SODA_COST_CAN:
-                sodas_bought += 1
-        return sodas_bought
+            for product_name, product_data in products_bought.items():
+                if abs(transaction.value) in product_data["price_history"]:
+                    products_bought[product_name]["count"] += 1
+        return products_bought.values()
 
     def __str__(self):
         return "%s %s" % (self.name, self.balance)
