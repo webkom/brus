@@ -19,27 +19,36 @@ SODA_COST_BOTTLE = (
 SODA_COST_CAN_CURRENT = round(decimal.Decimal(8.99), 2)
 SODA_COST_CAN = (SODA_COST_CAN_CURRENT, round(decimal.Decimal(5.45), 2))
 
-PRODUCT_TYPE_CAN = "boks"
-PRODUCT_TYPE_BOTTLE = "flaske"
+BOTTLE_TYPE_CAN = "boks"
+BOTTLE_TYPE_BOTTLE = "flaske"
+
+PRODUCT_TYPE_SODA = "soda"
+PRODUCT_TYPE_BEER = "beer"
 
 PRODUCT_LIST = {
     "soda_can": {
+        "key": "soda_can",
         "name": "Brus 0.33L Boks",
-        "type": PRODUCT_TYPE_CAN,
+        "bottle_type": BOTTLE_TYPE_CAN,
+        "product_type": PRODUCT_TYPE_SODA,
         "image": "TODO",
         "current_price": SODA_COST_CAN_CURRENT,
         "price_history": SODA_COST_CAN,
     },
     "soda_bottle": {
+        "key": "soda_bottle",
         "name": "Brus 0.5L Flaske",
-        "type": PRODUCT_TYPE_BOTTLE,
+        "bottle_type": BOTTLE_TYPE_BOTTLE,
+        "product_type": PRODUCT_TYPE_SODA,
         "image": "TODO",
         "current_price": SODA_COST_BOTTLE_CURRENT,
         "price_history": SODA_COST_BOTTLE,
     },
     "beer_dahls_bottle": {
+        "key": "beer_dahls_bottle",
         "name": "Dahls 0.33L Flakse",
-        "type": PRODUCT_TYPE_BOTTLE,
+        "bottle_type": BOTTLE_TYPE_BOTTLE,
+        "product_type": PRODUCT_TYPE_BEER,
         "image": "TODO",
         "current_price": BEER_COST_DAHLS_BOTTLE_CURRENT,
         "price_history": BEER_COST_DAHLS_BOTTLE,

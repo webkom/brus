@@ -6,7 +6,7 @@ from ..models import Person
 class PersonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Person
-        fields = ("name", "balance", "products_bought")
+        fields = ("name", "balance", "purchase_summary", "products_bought")
 
 
 class ShoppingCartSerializer(serializers.Serializer):

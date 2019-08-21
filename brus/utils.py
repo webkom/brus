@@ -22,15 +22,19 @@ def generate_cors_origin_regex_list(domains):
 
 
 def format_slack_message(person, product_name, count):
+    # TODO: Add purchase history list
     return (
         f"{person.name} har kjøpt {count}x {product_name}, {person.name} sin nye saldo er "
-        f"{person.balance} kr. {person.name} har kjøpt totalt "
+        f"{person.balance} kr."
     )
 
 
 def post_slack_notification(person, product_name, count):
     if SLACK_RELAY_URL is None:
+        print("Envrionment variable SLACK_RELAY_URL is None, not sending notification.")
         return
+
+    print("Sending Slack notification...")
 
     requests.post(
         SLACK_RELAY_URL,
@@ -43,11 +47,15 @@ def post_slack_notification(person, product_name, count):
         },
         headers={"Content-Type": "application/json"},
     )
+    print("Published purchase notification slack")
 
 
 def publish_mqtt_notification(person, success=True):
     if MQTT_HOST is None:
+        print("Envrionment variable MQTT_HOST is None, not sending notification.")
         return
+
+    print("Sending MQTT notification...")
 
     # TODO: notification/brus_error
 
@@ -64,7 +72,7 @@ def publish_mqtt_notification(person, success=True):
     publish.single(
         topic="notification/brus_success" if success else "notification/brus_error",
         payload=notification_message,
-        qos=2,
+        qos=0,
         retain=False,
         hostname=MQTT_HOST,
         port=MQTT_PORT,
@@ -73,3 +81,4 @@ def publish_mqtt_notification(person, success=True):
         auth=MQTT_AUTH,
         tls=tls,
     )
+    print("Published purchase notification to MQTT topic 'notification/brus_success'")

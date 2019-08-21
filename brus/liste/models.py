@@ -29,19 +29,29 @@ class Person(models.Model):
             balance += transaction.value
         return balance
 
+    def purchase_summary(self):
+        products_bought = self.products_bought()
+        summary = {}
+        for product in products_bought:
+            if product["product_type"] not in summary.keys():
+                summary[product["product_type"]] = product["count"]
+            else:
+                summary[product["product_type"]] += product["count"]
+        return summary
+
     def products_bought(self):
         products_bought = {}
+        for product_name, product_data in PRODUCT_LIST.items():
+            products_bought[product_name] = {
+                **product_data,
+                **{"count": 0, "key": product_name},
+            }
 
         for transaction in self.transactions.all():
-            for product_name, product_data in PRODUCT_LIST.items():
-                key = product_data["name"]
+            for product_name, product_data in products_bought.items():
                 if abs(transaction.value) in product_data["price_history"]:
-                    if key not in products_bought.keys():
-                        products_bought[key] = 1
-                    else:
-                        products_bought[key] += 1
-
-        return products_bought
+                    products_bought[product_name]["count"] += 1
+        return products_bought.values()
 
     def __str__(self):
         return "%s %s" % (self.name, self.balance)

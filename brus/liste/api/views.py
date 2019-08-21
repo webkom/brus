@@ -29,6 +29,10 @@ class ListeViewSet(
     lookup_field = "name"
     lookup_url_regex = r"[/w/s]+"
 
+    @decorators.list_route()
+    def products(self, request):
+        return Response(PRODUCT_LIST.values())
+
     @decorators.list_route(methods=["POST"], serializer_class=PurchaseSerializer)
     def purchase(self, request):
         serializer = self.get_serializer(data=request.data)
