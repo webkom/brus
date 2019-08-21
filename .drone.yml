@@ -12,7 +12,8 @@ pipeline:
     when:
       branch:
         - master
-    repo: abakus/brus
+    registry: https://registry.abakus.no
+    repo: registry.abakus.no/webkom/brus
     secrets: [ docker_username, docker_password ]
     tags:
       - latest
