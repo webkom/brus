@@ -10,6 +10,9 @@ class LegoOAuth2(BaseOAuth2):
     SCOPE_SEPARATOR = ","
     EXTRA_DATA = [("id", "id"), ("expires_in", "expires_in")]
 
+    def get_scope(self):
+        return ["user"]
+
     def api_url(self):
         api_url = self.setting("API_URL")
         if not api_url:
@@ -49,5 +52,5 @@ class LegoOAuth2(BaseOAuth2):
         return user_data
 
     def _user_data(self, access_token):
-        url = urljoin(self.api_url(), "api/v1/users/me/")
+        url = urljoin(self.api_url(), "api/v1/users/oauth2_userdata/")
         return self.get_json(url, headers={"AUTHORIZATION": "Bearer %s" % access_token})
