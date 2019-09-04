@@ -1,4 +1,4 @@
-Django==2.2.4
+Django==2.2.5
 django-auth-abakus==1.1.0
 djangorestframework==3.7.3
 django-crispy-forms==1.7.0
