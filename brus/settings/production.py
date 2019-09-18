@@ -41,7 +41,7 @@ SLACK_RELAY_URL = env("SLACK_RELAY_URL")
 
 # CORS
 CORS_ORIGIN_WHITELIST = ["http://127.0.0.1:3000", "http://localhost:3000"]
-CORS_ORIGIN_DOMAINS = env("CORS_ORIGIN_DOMAINS", default=["abakus.no"])
+CORS_ORIGIN_DOMAINS = env.list("CORS_ORIGIN_DOMAINS", default=["abakus.no", "webkom.now.sh"])
 CORS_ORIGIN_REGEX_WHITELIST = generate_cors_origin_regex_list(CORS_ORIGIN_DOMAINS)
 
 # MQTT
