@@ -54,7 +54,9 @@ def publish_mqtt_notification(person, success=True):
 
     # notification/brus_success
 
-    notification_message = f"Kjøp for {person.name} godkjent\n\nNy saldo {person.balance}"
+    notification_message = (
+        f"Kjøp for {person.name} godkjent\n\nNy saldo {person.balance}"
+    )
 
     MQTT_AUTH = {"username": MQTT_USERNAME, "password": MQTT_PASSWORD}
 
