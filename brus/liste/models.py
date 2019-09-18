@@ -77,7 +77,7 @@ def publish_mqtt_notification(person, success=True):
     print("Published purchase notification to MQTT topic 'notification/brus_success'")
     if success:
         publish.single(
-            topic="fridge/shopping_cart"
+            topic="fridge/shopping_cart",
             payload="[]",
             qos=0,
             retain=True,
