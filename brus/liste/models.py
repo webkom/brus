@@ -54,7 +54,7 @@ def publish_mqtt_notification(person, success=True):
 
     # notification/brus_success
 
-    notification_message = f"Kjøp for {person.name} godkjent"
+    notification_message = f"Kjøp for {person.name} godkjent\n\nNy saldo {person.balance}"
 
     MQTT_AUTH = {"username": MQTT_USERNAME, "password": MQTT_PASSWORD}
 
@@ -75,6 +75,19 @@ def publish_mqtt_notification(person, success=True):
         tls=tls,
     )
     print("Published purchase notification to MQTT topic 'notification/brus_success'")
+    if success:
+        publish.single(
+            topic="fridge/shopping_cart"
+            payload="[]",
+            qos=0,
+            retain=True,
+            hostname=MQTT_HOST,
+            port=MQTT_PORT,
+            client_id=MQTT_CLIENT,
+            keepalive=10,
+            auth=MQTT_AUTH,
+            tls=tls,
+        )
 
 
 class Person(models.Model):
