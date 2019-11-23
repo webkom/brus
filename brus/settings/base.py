@@ -52,7 +52,7 @@ PRODUCT_LIST = {
     },
     "beer_dahls_jul_bottle": {
         "key": "beer_dahls_jul_bottle",
-        "name": "Dahls juleøl 0.33L Flakse",
+        "name": "Dahls juleøl 0.33L Flaske",
         "bottle_type": BOTTLE_TYPE_BOTTLE,
         "product_type": PRODUCT_TYPE_BEER,
         "image": "TODO",
@@ -61,7 +61,7 @@ PRODUCT_LIST = {
     },
     "beer_dahls_bottle": {
         "key": "beer_dahls_bottle",
-        "name": "Dahls 0.33L Flakse",
+        "name": "Dahls 0.33L Flaske",
         "bottle_type": BOTTLE_TYPE_BOTTLE,
         "product_type": PRODUCT_TYPE_BEER,
         "image": "TODO",
