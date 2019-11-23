@@ -6,6 +6,9 @@ import environ
 root = environ.Path(__file__) - 2
 BASE_DIR = root()
 
+BEER_COST_DAHLS_JUL_BOTTLE_CURRENT = round(decimal.Decimal(32.00), 2)
+BEER_COST_DAHLS_JUL_BOTTLE = (BEER_COST_DAHLS_JUL_BOTTLE_CURRENT,)
+
 BEER_COST_DAHLS_BOTTLE_CURRENT = round(decimal.Decimal(22.00), 2)
 BEER_COST_DAHLS_BOTTLE = (
     BEER_COST_DAHLS_BOTTLE_CURRENT,
@@ -47,9 +50,18 @@ PRODUCT_LIST = {
         "current_price": SODA_COST_BOTTLE_CURRENT,
         "price_history": SODA_COST_BOTTLE,
     },
+    "beer_dahls_jul_bottle": {
+        "key": "beer_dahls_jul_bottle",
+        "name": "Dahls juleøl 0.33L Flaske",
+        "bottle_type": BOTTLE_TYPE_BOTTLE,
+        "product_type": PRODUCT_TYPE_BEER,
+        "image": "TODO",
+        "current_price": BEER_COST_DAHLS_JUL_BOTTLE_CURRENT,
+        "price_history": BEER_COST_DAHLS_JUL_BOTTLE,
+    },
     "beer_dahls_bottle": {
         "key": "beer_dahls_bottle",
-        "name": "Dahls 0.33L Flakse",
+        "name": "Dahls 0.33L Flaske",
         "bottle_type": BOTTLE_TYPE_BOTTLE,
         "product_type": PRODUCT_TYPE_BEER,
         "image": "TODO",
