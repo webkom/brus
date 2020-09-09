@@ -1,5 +1,10 @@
-pipeline:
-  tests:
+---
+kind: pipeline
+type: docker
+name: default
+
+steps:
+  - name: steps
     image: python:3.6
     commands:
       - pip install tox
@@ -7,15 +12,20 @@ pipeline:
       - tox -e flake8
       - tox -e black
 
-  docker:
+  - name: docker
     image: plugins/docker
     when:
       branch:
         - master
-    registry: https://registry.abakus.no
-    repo: registry.abakus.no/webkom/brus
-    secrets: [ docker_username, docker_password ]
-    tags:
-      - latest
-      - ${DRONE_BRANCH}-${DRONE_COMMIT_SHA:0:7}
-
+      event: push
+      status: success
+    settings:
+      registry: https://registry.webkom.dev
+      repo: registry.webkom.dev/webkom/brus
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+      tags:
+        - latest
+        - ${DRONE_BRANCH}-${DRONE_COMMIT_SHA:0:7}
