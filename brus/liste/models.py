@@ -50,7 +50,7 @@ def post_slack_notification(person, product_name, count):
     print("Published purchase notification slack")
 
 
-def publish_mqtt_notification(person, success=True):
+def publish_mqtt_notification(person, product_name, count, success=True):
     if MQTT_HOST is None:
         print("Envrionment variable MQTT_HOST is None, not sending notification.")
         return
@@ -62,8 +62,13 @@ def publish_mqtt_notification(person, success=True):
     # notification/brus_success
 
     notification_message = (
-        f"Kjøp for {person.name} godkjent\n\nNy saldo {person.balance}"
+        f"{person.name} kjøpte {count}x{product_name}. Ny saldo {person.balance}"
     )
+    if count < 0:
+        notification_message = (
+            f"{person.name} fylte {count}x{product_name} i kjøleskapet. "
+            + f"BRA! Ny saldo {person.balance}"
+        )
 
     MQTT_AUTH = {"username": MQTT_USERNAME, "password": MQTT_PASSWORD}
 
@@ -111,7 +116,9 @@ class Person(models.Model):
             self.transactions.create(value=-amount * math.copysign(1, count))
         self.save()
 
-        publish_mqtt_notification(self)
+        for product_name, product_data in PRODUCT_LIST.items():
+            if amount == product_data["current_price"]:
+                publish_mqtt_notification(self, product_data["name"], count)
 
         for product_name, product_data in PRODUCT_LIST.items():
             if amount == product_data["current_price"]:
