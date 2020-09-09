@@ -1,3 +1,4 @@
+import decimal
 import math
 
 import paho.mqtt.publish as publish
@@ -113,7 +114,9 @@ class Person(models.Model):
 
     def withdraw_money(self, amount, count=1):
         for i in range(abs(count)):
-            self.transactions.create(value=-amount * math.copysign(1, count))
+            self.transactions.create(
+                value=-amount * decimal.Decimal(math.copysign(1, count))
+            )
         self.save()
 
         for product_name, product_data in PRODUCT_LIST.items():
