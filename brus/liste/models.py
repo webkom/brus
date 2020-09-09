@@ -1,5 +1,6 @@
 import paho.mqtt.publish as publish
 import requests
+import math
 from django.db import models
 
 from brus.settings import (
@@ -16,9 +17,14 @@ from brus.settings import (
 
 def format_slack_message(person, product_name, count):
     # TODO: Add purchase history list
+    if count > 0:
+        return (
+            f"{person.name} har kjøpt {count}x {product_name}, {person.name} sin nye saldo er "
+            f"{person.balance} kr."
+        )
     return (
-        f"{person.name} har kjøpt {count}x {product_name}, {person.name} sin nye saldo er "
-        f"{person.balance} kr."
+        f"{person.name} har fylt på {count}x {product_name} i kjøleskapet, {person.name} sin nye "
+        f"saldo er {person.balance} kr. BRA JOBBA!!!"
     )
 
 
@@ -100,8 +106,8 @@ class Person(models.Model):
         self.save()
 
     def withdraw_money(self, amount, count=1):
-        for i in range(count):
-            self.transactions.create(value=-amount)
+        for i in range(abs(count)):
+            self.transactions.create(value=-amount * math.copysign(1, count))
         self.save()
 
         publish_mqtt_notification(self)
