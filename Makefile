@@ -19,4 +19,7 @@ production:
 	venv/bin/pip install -r requirements/prod.txt --upgrade
 	venv/bin/python manage.py migrate
 
-.PHONY: help development production docs
+fixme:
+	docker run --rm -v ${PWD}:/code -it python:3.7-slim "bash" "-c" "cd /code && pip install black isort && isort -rc brus && black brus"
+
+.PHONY: help development production docs fixme

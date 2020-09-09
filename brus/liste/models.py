@@ -1,6 +1,7 @@
+import math
+
 import paho.mqtt.publish as publish
 import requests
-import math
 from django.db import models
 
 from brus.settings import (
