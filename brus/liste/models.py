@@ -4,6 +4,7 @@ import math
 import paho.mqtt.publish as publish
 import requests
 from django.db import models
+from django.db.models import Sum
 
 from brus.settings import (
     MQTT_CLIENT,
@@ -140,10 +141,7 @@ class Person(models.Model):
 
     @property
     def balance(self):
-        balance = 0
-        for transaction in self.transactions.all():
-            balance += transaction.value
-        return balance
+        return self.transactions.all().aggregate(Sum("value"))["value__sum"]
 
     def purchase_summary(self):
         products_bought = self.products_bought()

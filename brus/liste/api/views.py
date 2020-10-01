@@ -1,16 +1,26 @@
+import decimal
+
+from django.db.models import Sum
 from django.utils import timezone
 from rest_framework import decorators, exceptions, mixins, status, viewsets
 from rest_framework.response import Response
 
 from brus.liste.api.serializers import PersonSerializer, PurchaseSerializer
-from brus.liste.models import Person, post_slack_notification, publish_mqtt_notification
-from brus.settings import PRODUCT_LIST
+from brus.liste.models import (
+    Person,
+    Transactions,
+    post_slack_notification,
+    publish_mqtt_notification,
+)
+from brus.settings import BEER_COST_DAHLS_BOTTLE_CURRENT, PRODUCT_LIST
 
 
 def purchase(name, shopping_cart):
     try:
         person = Person.objects.get(name=name)
-        if person.balance < 0:
+        if person.balance < 0 and Transactions.objects.all().aggregate(Sum("value"))[
+            "value__sum"
+        ] < (BEER_COST_DAHLS_BOTTLE_CURRENT * decimal.Decimal(24)):
             current_balance = person.balance
             for txn in person.transactions.filter(
                 date__gt=timezone.now() - timezone.timedelta(days=3)
