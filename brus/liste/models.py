@@ -30,37 +30,47 @@ def format_slack_message(person, product_name, count):
     )
 
 
-def post_slack_notification(person, product_name, count):
+def post_slack_notification(person, product_name="", count=1, success=True):
     if SLACK_RELAY_URL is None:
         print("Envrionment variable SLACK_RELAY_URL is None, not sending notification.")
         return
 
     print("Sending Slack notification...")
 
-    requests.post(
-        SLACK_RELAY_URL,
-        timeout=10,
-        json={
-            "text": format_slack_message(person, product_name, count),
-            "username": "brus",
-            "icon_emoji": ":cup_with_straw:",
-            "channel": "#brus",
-        },
-        headers={"Content-Type": "application/json"},
-    )
+    if success:
+        requests.post(
+            SLACK_RELAY_URL,
+            timeout=10,
+            json={
+                "text": format_slack_message(person, product_name, count),
+                "username": "brus",
+                "icon_emoji": ":cup_with_straw:",
+                "channel": "#brus",
+            },
+            headers={"Content-Type": "application/json"},
+        )
+    else:
+        requests.post(
+            SLACK_RELAY_URL,
+            timeout=10,
+            json={
+                "text": f"{person.name} har hatt negativ saldo for lenge!! Go buy some :dahls:",
+                "username": "brus",
+                "icon_emoji": ":cup_with_straw:",
+                "channel": "#brus",
+            },
+            headers={"Content-Type": "application/json"},
+        )
+
     print("Published purchase notification slack")
 
 
-def publish_mqtt_notification(person, product_name, count, success=True):
+def publish_mqtt_notification(person, product_name="", count=1, success=True):
     if MQTT_HOST is None:
         print("Envrionment variable MQTT_HOST is None, not sending notification.")
         return
 
     print("Sending MQTT notification...")
-
-    # TODO: notification/brus_error
-
-    # notification/brus_success
 
     notification_message = (
         f"{person.name} kjøpte {count}x{product_name}. Ny saldo {person.balance}"
@@ -79,7 +89,11 @@ def publish_mqtt_notification(person, product_name, count, success=True):
 
     publish.single(
         topic="notification/brus_success" if success else "notification/brus_error",
-        payload=notification_message,
+        payload=(
+            notification_message
+            if success
+            else f"{person.name} har hatt negativ saldo for lenge!!! Go buy some :dahls:"
+        ),
         qos=0,
         retain=False,
         hostname=MQTT_HOST,
@@ -122,9 +136,6 @@ class Person(models.Model):
         for product_name, product_data in PRODUCT_LIST.items():
             if amount == product_data["current_price"]:
                 publish_mqtt_notification(self, product_data["name"], count)
-
-        for product_name, product_data in PRODUCT_LIST.items():
-            if amount == product_data["current_price"]:
                 post_slack_notification(self, product_data["name"], count)
 
     @property
