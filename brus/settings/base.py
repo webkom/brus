@@ -12,9 +12,10 @@ BEER_COST_DAHLS_JUL_BOTTLE = (
     round(decimal.Decimal(32.00), 2),
 )
 
-BEER_COST_DAHLS_BOTTLE_CURRENT = round(decimal.Decimal(25.00), 2)
+BEER_COST_DAHLS_BOTTLE_CURRENT = round(decimal.Decimal(22.10), 2)
 BEER_COST_DAHLS_BOTTLE = (
     BEER_COST_DAHLS_BOTTLE_CURRENT,
+    round(decimal.Decimal(25.00), 2),
     round(decimal.Decimal(22.00), 2),
     round(decimal.Decimal(24.00), 2),
 )
