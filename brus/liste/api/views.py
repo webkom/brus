@@ -20,7 +20,7 @@ def purchase(name, shopping_cart):
         person = Person.objects.get(name=name)
         if person.balance < 0 and Transactions.objects.all().aggregate(Sum("value"))[
             "value__sum"
-        ] < (BEER_COST_DAHLS_BOTTLE_CURRENT * decimal.Decimal(24)):
+        ] < (BEER_COST_DAHLS_BOTTLE_CURRENT * decimal.Decimal(48)):
             current_balance = person.balance
             for txn in person.transactions.filter(
                 date__gt=timezone.now() - timezone.timedelta(days=3)
