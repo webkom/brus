@@ -18,9 +18,7 @@ from brus.settings import BEER_COST_DAHLS_BOTTLE_CURRENT, PRODUCT_LIST
 def purchase(name, shopping_cart):
     try:
         person = Person.objects.get(name=name)
-        if person.balance < 0 and Transactions.objects.all().aggregate(Sum("value"))[
-            "value__sum"
-        ] < (BEER_COST_DAHLS_BOTTLE_CURRENT * decimal.Decimal(48)):
+        if person.balance < 0:
             current_balance = person.balance
             for txn in person.transactions.filter(
                 date__gt=timezone.now() - timezone.timedelta(days=3)
@@ -33,7 +31,6 @@ def purchase(name, shopping_cart):
             if current_balance < 0:
                 publish_mqtt_notification(person, success=False)
                 post_slack_notification(person, success=False)
-                return Response(status=status.HTTP_204_NO_CONTENT)
 
         for cart_item in shopping_cart:
             product_price = PRODUCT_LIST[cart_item["product_name"]]["current_price"]
