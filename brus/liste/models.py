@@ -1,4 +1,5 @@
 import decimal
+import json
 import math
 
 import paho.mqtt.publish as publish
@@ -104,6 +105,22 @@ def publish_mqtt_notification(person, product_name="", count=1, success=True):
         auth=MQTT_AUTH,
         tls=tls,
     )
+    if not success:
+        text = (
+            f"{person.name} har hatt negativ saldo for lenge!!! Go buy some :dahls:",
+        )
+        publish.single(
+            topic="office_speaker/command",
+            payload=(json.dumps({"command": "say", "text": text})),
+            qos=0,
+            retain=False,
+            hostname=MQTT_HOST,
+            port=MQTT_PORT,
+            client_id=MQTT_CLIENT,
+            keepalive=10,
+            auth=MQTT_AUTH,
+            tls=tls,
+        )
     print("Published purchase notification to MQTT topic 'notification/brus_success'")
     if success:
         publish.single(

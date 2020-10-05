@@ -1,18 +1,10 @@
-import decimal
-
-from django.db.models import Sum
 from django.utils import timezone
 from rest_framework import decorators, exceptions, mixins, status, viewsets
 from rest_framework.response import Response
 
 from brus.liste.api.serializers import PersonSerializer, PurchaseSerializer
-from brus.liste.models import (
-    Person,
-    Transactions,
-    post_slack_notification,
-    publish_mqtt_notification,
-)
-from brus.settings import BEER_COST_DAHLS_BOTTLE_CURRENT, PRODUCT_LIST
+from brus.liste.models import Person, post_slack_notification, publish_mqtt_notification
+from brus.settings import PRODUCT_LIST
 
 
 def purchase(name, shopping_cart):
