@@ -1,0 +1,14 @@
+
+.name {
+  text-align: center;
+}
+
+.spacing {
+  display: flex;
+  flex-direction: row;
+}
+
+.spacing form {
+  margin-left: auto;
+  padding: 7px;
+}

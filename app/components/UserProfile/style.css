@@ -1,0 +1,9 @@
+
+.userProfile td{
+	border-top: 1px dotted var(--abakus-grey-dark);
+}
+
+.userProfile td, .userProfile th{
+	
+	padding: 10px;
+}

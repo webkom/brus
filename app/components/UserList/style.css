@@ -1,0 +1,8 @@
+
+.list td{
+	border-top: 1px dotted var(--abakus-grey-dark);
+}
+
+.list td, .list th{
+	padding: 10px;
+}
