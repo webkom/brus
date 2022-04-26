@@ -47,7 +47,7 @@ def post_slack_notification(person, product_name="", count=1, success=True):
                 "text": format_slack_message(person, product_name, count),
                 "username": "brus",
                 "icon_emoji": ":cup_with_straw:",
-                "channel": "#brus",
+                "channel": "#2-brus",
             },
             headers={"Content-Type": "application/json"},
         )
@@ -59,7 +59,7 @@ def post_slack_notification(person, product_name="", count=1, success=True):
                 "text": f"{person.name} har hatt negativ saldo for lenge!! Go buy some :dahls:",
                 "username": "brus",
                 "icon_emoji": ":cup_with_straw:",
-                "channel": "#brus",
+                "channel": "#2-brus",
             },
             headers={"Content-Type": "application/json"},
         )
