@@ -1,0 +1,13 @@
+
+.delete{
+	text-align: center;
+}
+.delete span {
+	color: var(--abakus-red);
+}
+
+.delete span:hover{
+	font-weight: bold;
+	color: var(--abakus-red-dark);
+	cursor: pointer;
+}

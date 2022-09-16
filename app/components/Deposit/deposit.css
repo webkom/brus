@@ -1,0 +1,13 @@
+
+.input {
+	width: 5em;
+}
+
+.button {
+	background-color: var(--brus-green);
+	color: #000;
+}
+.button:hover {
+	background-color: var(--brus-green-dark);
+	transition: background-color var(--transition-short);
+}

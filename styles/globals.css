@@ -1,0 +1,39 @@
+body {
+	color: var(--abakus-grey-dark);
+	background-color: var(--abakus-grey);
+	padding: 30px;
+	text-align: left;
+	font-family: sans-serif;
+}
+
+#container {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	margin: auto;
+	background-color: #FFF;
+	padding: 80px;
+	border-radius: 10px;
+	box-shadow: 7px 9px 5px var(--abakus-grey-dark);
+	width: 45em;
+}
+
+#container div{
+	padding: 7px;
+	margin-bottom: 7px;
+}
+
+button, input {
+	border-radius: 2px;
+	border: 1px solid var(--abakus-grey);
+	padding: 4px;
+}
+
+a {
+	color: var(--abakus-grey);
+	text-decoration: none;
+}
+
+a:hover {
+	font-weight: bold;
+}
