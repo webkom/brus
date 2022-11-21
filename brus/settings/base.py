@@ -6,9 +6,10 @@ import environ
 root = environ.Path(__file__) - 2
 BASE_DIR = root()
 
-BEER_COST_DAHLS_JUL_BOTTLE_CURRENT = round(decimal.Decimal(31.00), 2)
+BEER_COST_DAHLS_JUL_BOTTLE_CURRENT = round(decimal.Decimal(33.00), 2)
 BEER_COST_DAHLS_JUL_BOTTLE = (
     BEER_COST_DAHLS_JUL_BOTTLE_CURRENT,
+    round(decimal.Decimal(31.00), 2),
     round(decimal.Decimal(32.00), 2),
 )
 
