@@ -1,19 +1,13 @@
-import { MinimalUser } from "@/app/utils/interfaces";
+import { BRUS_COST } from "@/app/utils/constants";
 import { getUserCollection } from "../mongodb";
 import { NextResponse } from "next/server";
 
 export const POST = async (req: Request) => {
-  function applyPunishment(amount: number, days: number) {
-    const M = 200;
-    const T = 75;
-    const c = 0.08;
-    const maxDays = 42;
-
-    const sigmoid = M / (1 + Math.exp(-c * (amount - T)));
-
-    const timeFactor = Math.min(days / maxDays, 1);
-
-    return sigmoid * timeFactor;
+  function applyPunishment(amount: number, daysSincePunishment: number) {
+    if (daysSincePunishment >= 7) {
+      return Math.ceil(amount / 100) * BRUS_COST.Dahls;
+    }
+    return 0;
   }
   try {
     const userCollection = await getUserCollection();
@@ -24,10 +18,18 @@ export const POST = async (req: Request) => {
 
     for (let user of users) {
       if (user.saldo >= 0) {
+        bulkOperations.push({
+          updateOne: {
+            filter: { brusName: user.brusName },
+            update: {
+              $set: { saldo: 0, dateSinceNegative: null },
+            },
+          },
+        });
         continue;
       }
 
-      let daysSincePunishment = 7;
+      let daysSincePunishment = 0;
       if (user.dateSinceNegative) {
         const lastPunishmentDate = new Date(user.dateSinceNegative);
         const diffTime = Math.abs(
@@ -48,7 +50,10 @@ export const POST = async (req: Request) => {
         updateOne: {
           filter: { brusName: user.brusName },
           update: {
-            $set: { saldo: newSaldo },
+            $set: {
+              saldo: newSaldo >= 0 ? 0 : newSaldo,
+              ...(newSaldo >= 0 ? { dateSinceNegative: null } : {}),
+            },
             ...(user.dateSinceNegative ? {} : { dateSinceNegative: today }),
           },
         },
@@ -59,11 +64,7 @@ export const POST = async (req: Request) => {
       await userCollection.bulkWrite(bulkOperations);
     }
 
-    const updatedUsers = (await userCollection.find().toArray())
-      .filter((u) => u.saldo < 0)
-      .map((uu) => {
-        return { brusName: uu.brusName, saldo: uu.saldo };
-      });
+    const updatedUsers = await userCollection.find().toArray();
     return NextResponse.json({ updatedUsers }, { status: 200 });
   } catch (error: unknown) {
     return NextResponse.json({ error: error }, { status: 500 });
