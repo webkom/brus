@@ -9,6 +9,11 @@ export interface User {
   dateSinceNegative: Date;
 }
 
+export interface MinimalUser {
+  brusName: string;
+  saldo: number;
+}
+
 export interface Member {
   name: string;
   full_name: string;

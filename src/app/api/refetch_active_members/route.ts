@@ -29,7 +29,7 @@ export async function GET() {
   if (!(await addUsersToCollection(users))) {
     return NextResponse.json(
       { error: "Failed to add users to database" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 
@@ -46,7 +46,7 @@ const addUsersToCollection = async (users: User[]) => {
           .find({ brusName: { $in: userBrusNames } })
           .project({ brusName: 1 })
           .toArray()
-      ).map((user) => user.brusName)
+      ).map((user) => user.brusName),
     );
     const newUsers = users.filter((u) => !existingUserNames.has(u.brusName));
     newUsers.length > 0 && (await userCollection.insertMany(newUsers));
