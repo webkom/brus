@@ -6,7 +6,7 @@ export interface User {
   name: string;
   saldo: number;
   avatar: string;
-  dateSinceNegative: Date;
+  dateSinceNegative: Date | null;
 }
 
 export interface MinimalUser {

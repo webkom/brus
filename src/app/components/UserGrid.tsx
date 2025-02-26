@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { UserButton } from "./UserButton";
 import { useQuery } from "@tanstack/react-query";
 import { getUsers, refetchActiveMembers } from "../utils/hooks";
+import { User } from "../utils/interfaces";
 
 interface UserGridProps {
   className?: string;
@@ -41,9 +42,11 @@ const UserGrid: React.FC<UserGridProps> = ({ className }) => {
     <div
       className={`grid grid-cols-5 gap-4 p-4 sm:grid-cols-5 max-w-200 m-auto ${className}`}
     >
-      {users.map((user) => (
-        <UserButton key={user.brusName} user={user} />
-      ))}
+      {users
+        .sort((a: User, b: User) => b.saldo - a.saldo)
+        .map((user) => (
+          <UserButton key={user.brusName} user={user} />
+        ))}
     </div>
   );
 };

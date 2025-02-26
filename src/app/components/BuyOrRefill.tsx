@@ -33,7 +33,7 @@ const BuyOrRefill = ({ user, buyOrRefill }: BuyOrRefillProps) => {
     refetch()
       .then(({ data: updatedUser }) => {
         if (updatedUser) {
-          queryClient.setQueryData(["users"], (usersInCache: User[]) => {
+          queryClient.setQueryData(["usersKey"], (usersInCache: User[]) => {
             return usersInCache.map((userInCache) =>
               userInCache.brusName === user.brusName
                 ? updatedUser
