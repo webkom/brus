@@ -35,12 +35,14 @@ const BuyOrRefill = ({ user, buyOrRefill }: BuyOrRefillProps) => {
         if (updatedUser) {
           queryClient.setQueryData(["users"], (usersInCache: User[]) => {
             return usersInCache.map((userInCache) =>
-              userInCache.brusName === user.brusName ? updatedUser : userInCache
+              userInCache.brusName === user.brusName
+                ? updatedUser
+                : userInCache,
             );
           });
         } else {
           // If updated data is not returned, refetch all users
-          queryClient.invalidateQueries({ queryKey: ["users"] });
+          queryClient.invalidateQueries({ queryKey: ["usersKey"] });
         }
       })
       .catch((error) => {

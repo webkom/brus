@@ -20,7 +20,7 @@ const UserGrid: React.FC<UserGridProps> = ({ className }) => {
 
     refetch,
   } = useQuery({
-    queryKey: ["users"],
+    queryKey: ["usersKey"],
     queryFn: getUsers,
   });
 
