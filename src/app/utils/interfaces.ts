@@ -6,6 +6,12 @@ export interface User {
   name: string;
   saldo: number;
   avatar: string;
+  dateSinceNegative: Date;
+}
+
+export interface MinimalUser {
+  brusName: string;
+  saldo: number;
 }
 
 export interface Member {

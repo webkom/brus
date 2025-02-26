@@ -12,7 +12,7 @@ export async function POST(req: Request) {
     const brusType = data.brusType;
     userCollection.updateOne(
       { brusName: username },
-      { $inc: { saldo: -amount * BRUS_COST[brusType] } }
+      { $inc: { saldo: -amount * BRUS_COST[brusType] } },
     );
 
     const updatedUser = await userCollection.findOne({ brusName: username });
@@ -21,7 +21,7 @@ export async function POST(req: Request) {
   } catch (error) {
     return NextResponse.json(
       { error: "Buying brus unsuccessful" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

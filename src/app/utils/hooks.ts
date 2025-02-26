@@ -5,6 +5,7 @@ import {
   REFETCH_MEMBERS_ROUTE,
   REFILL_BRUS_ROUTE,
   USERS_ROUTE,
+  WALLOFSHAME_ROUTE,
 } from "./constants";
 import { BuyRefillBrusRequest, User } from "./interfaces";
 
@@ -73,4 +74,15 @@ export const refillBrus = async ({
   const updatedUser = await res.json().then((data) => data.updatedUser);
   if (!updatedUser) return false;
   return updatedUser;
+};
+
+export const triggerWallOfShame = async () => {
+  const res = await fetch(`${API_URL}${WALLOFSHAME_ROUTE}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const updatedUsers = await res.json().then((data) => data.updatedUsers);
+  return updatedUsers;
 };

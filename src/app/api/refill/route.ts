@@ -11,7 +11,7 @@ export const POST = async (req: Request) => {
     const username = data.userBrusName;
     userCollection.updateOne(
       { brusName: username },
-      { $inc: { saldo: amount * BRUS_COST[data.brusType] } }
+      { $inc: { saldo: amount * BRUS_COST[data.brusType] } },
     );
     const updatedUser = await userCollection.findOne({ brusName: username });
     if (!updatedUser) {
