@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { User } from "../utils/interfaces";
 import UserImage from "./UserImage";
 import BuyBrusModal from "./BuyBrusModal";
@@ -35,10 +35,6 @@ export const UserButton = ({ user }: userButtonProps) => {
       padding: "10px",
     };
   }
-
-  // Usage in JSX
-
-  // Usage in JSX
 
   return (
     <div style={getBorderStyle(user.saldo)}>
