@@ -1,15 +1,15 @@
 "use client";
 import FullscreenTrigger from "./components/FullscreenTrigger";
 import UserGrid from "./components/UserGrid";
-import WallOfShameButton from "./components/WallOfShamebutton";
+import WallOfShame from "./components/WallOfShame";
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center gap-2">
       <FullscreenTrigger />
-      <h1 className="text-4xl text-center">BRUUUUUUUUUSSSS baby</h1>
-      <WallOfShameButton />
+      <h1 className="text-4xl text-center py-3">BRUUUUUUUUUSSSS baby</h1>
       <UserGrid />
+      <WallOfShame />
     </div>
   );
 }

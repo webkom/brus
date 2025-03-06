@@ -11,25 +11,31 @@ export async function GET() {
     },
   });
 
-  let users: User[] = [];
-  try {
-    const data = await response.json();
-    users = data
-      .filter((m: Member) => m.active)
-      .map((member: Member) => ({
-        name: member.name,
-        brusName: member.brus,
-        github: member.github,
-        saldo: 0,
-        avatar: member.avatar,
-      }));
-  } catch (error) {
-    console.error("Failed to fetch members:", error);
+  if (response.status !== 200) {
+    return NextResponse.json(
+      {
+        error: `Klarte ikke hente medlemmer fra members, feilkode ${response.status}`,
+      },
+      { status: 500 }
+    );
   }
+
+  // Fetch and format members
+  const data = await response.json();
+  const users = data
+    .filter((m: Member) => m.active)
+    .map((member: Member) => ({
+      name: member.name,
+      brusName: member.brus,
+      github: member.github,
+      saldo: 0,
+      avatar: member.avatar,
+    }));
+  // Store the members to the database
   if (!(await addUsersToCollection(users))) {
     return NextResponse.json(
-      { error: "Failed to add users to database" },
-      { status: 500 },
+      { error: "Klarte ikke legge til brukerne i databasen" },
+      { status: 500 }
     );
   }
 
@@ -46,7 +52,7 @@ const addUsersToCollection = async (users: User[]) => {
           .find({ brusName: { $in: userBrusNames } })
           .project({ brusName: 1 })
           .toArray()
-      ).map((user) => user.brusName),
+      ).map((user) => user.brusName)
     );
     const newUsers = users.filter((u) => !existingUserNames.has(u.brusName));
     newUsers.length > 0 && (await userCollection.insertMany(newUsers));

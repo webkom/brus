@@ -33,7 +33,7 @@ export const POST = async (req: Request) => {
       if (user.dateSinceNegative) {
         const lastPunishmentDate = new Date(user.dateSinceNegative);
         const diffTime = Math.abs(
-          today.getTime() - lastPunishmentDate.getTime(),
+          today.getTime() - lastPunishmentDate.getTime()
         );
         daysSincePunishment += Math.ceil(diffTime / (1000 * 60 * 60 * 24));
       } else {
@@ -42,7 +42,7 @@ export const POST = async (req: Request) => {
 
       const punishment = applyPunishment(
         Math.abs(user.saldo),
-        daysSincePunishment,
+        daysSincePunishment
       );
       const newSaldo = user.saldo - punishment;
 

@@ -22,12 +22,15 @@ export const getUsers = async (): Promise<User[]> => {
   }
 };
 
-export const refetchActiveMembers = async () => {
+export const refetchActiveMembers: () => Promise<void> = async () => {
   const res = await fetch(`${API_URL}${REFETCH_MEMBERS_ROUTE}`);
   if (res.status === 200) {
-    return true;
+    return;
   }
-  return false;
+  const data = await res.json();
+  return new Promise((_, reject) =>
+    reject(data.error ?? "Klarte ikke hente aktive medlemmer")
+  );
 };
 
 export const buyBrus = async ({
@@ -84,5 +87,5 @@ export const triggerWallOfShame = async () => {
     },
   });
   const updatedUsers = await res.json().then((data) => data.updatedUsers);
-  return updatedUsers;
+  return updatedUsers as User[];
 };
