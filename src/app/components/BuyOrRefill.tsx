@@ -35,9 +35,7 @@ const BuyOrRefill = ({ user, buyOrRefill }: BuyOrRefillProps) => {
         if (updatedUser) {
           queryClient.setQueryData(["usersKey"], (usersInCache: User[]) => {
             return usersInCache.map((userInCache) =>
-              userInCache.brusName === user.brusName
-                ? updatedUser
-                : userInCache,
+              userInCache.brusName === user.brusName ? updatedUser : userInCache
             );
           });
         } else {
@@ -55,12 +53,12 @@ const BuyOrRefill = ({ user, buyOrRefill }: BuyOrRefillProps) => {
   const buttonText = buyOrRefill === "buyBrus" ? "Buy brus" : "Refill";
 
   return (
-    <>
+    <div className="flex flex-col gap-2">
       <div className="flex flex-row justify-between gap-4">
         <select
           value={brusType}
           onChange={(e) => setBrusType(e.target.value as BrusType)}
-          className="border-2 border-green-700 p-1 w-auto rounded-sm"
+          className="border-2 border-green-700 p-1 w-auto rounded-sm py-2"
         >
           {Object.keys(BRUS_COST).map((key) => (
             <option key={key} value={key}>
@@ -79,18 +77,18 @@ const BuyOrRefill = ({ user, buyOrRefill }: BuyOrRefillProps) => {
       </div>
 
       {error ? (
-        <p>Error: {error.message}</p>
+        <p className="py-1">Error: {error.message}</p>
       ) : isFetching ? (
-        <p>{fetchingText}</p>
+        <p className="py-1">{fetchingText}</p>
       ) : (
         <button
           onClick={handleBuyBrus}
-          className="bg-green-500 border-2 border-green-700"
+          className="bg-green-500 border-2 border-green-700 py-1"
         >
           {buttonText}
         </button>
       )}
-    </>
+    </div>
   );
 };
 
