@@ -15,7 +15,7 @@ const FullscreenTrigger = () => {
     <>
       {!fullscreen && (
         <button
-          className="cursor-pointer absolute bottom-0 left-0 p-1 px-3 bg-amber-300 rounded-tr-xl hover:bg-amber-400"
+          className="cursor-pointer fixed bottom-0 left-0 p-1 px-3 bg-amber-300 rounded-tr-xl hover:bg-amber-400"
           onClick={() => {
             document.documentElement.requestFullscreen();
           }}
