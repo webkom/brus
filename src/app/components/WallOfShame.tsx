@@ -77,7 +77,9 @@ const WallOfShameContent: React.FC<WallOfShameContentProps> = ({
               >
                 <UserImage user={user} size={35} />
                 <span>{user.name}</span>
-                <span>{user.saldo}kr</span>
+                <span>
+                  {Math.round((user.saldo + Number.EPSILON) * 100) / 100}kr
+                </span>
               </div>
             ))}
           </div>
