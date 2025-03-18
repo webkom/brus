@@ -4,10 +4,7 @@ import { NextResponse } from "next/server";
 
 export const POST = async (req: Request) => {
   function applyPunishment(amount: number, daysSincePunishment: number) {
-    if (daysSincePunishment >= 7) {
-      return Math.ceil(amount / 100) * BRUS_COST.Dahls;
-    }
-    return 0;
+    return Math.ceil(amount / 100) * BRUS_COST.Dahls;
   }
   try {
     const userCollection = await getUserCollection();
