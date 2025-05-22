@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { getUserCollection } from "../mongodb";
 import { BRUS_COST } from "@/app/utils/constants";
 import { BuyRefillBrusRequest } from "@/app/utils/interfaces";
+import getUserCollection from "../getUserCollection";
 
 export async function POST(req: Request) {
   const userCollection = await getUserCollection();
