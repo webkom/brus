@@ -6,16 +6,15 @@ import getUserCollection from "../getUserCollection";
 export async function POST(req: Request) {
   const userCollection = await getUserCollection();
   try {
-    const data = (await req.json()) as BuyRefillBrusRequest;
-    const amount = data.brusAmount;
-    const username = data.userBrusName;
-    const brusType = data.brusType;
-    userCollection.updateOne(
-      { brusName: username },
-      { $inc: { saldo: -amount * BRUS_COST[brusType] } },
+    const { brusAmount, userBrusName, brusType } =
+      (await req.json()) as BuyRefillBrusRequest;
+
+    await userCollection.updateOne(
+      { brusName: userBrusName },
+      { $inc: { saldo: -brusAmount * BRUS_COST[brusType] } },
     );
 
-    const updatedUser = await userCollection.findOne({ brusName: username });
+    const updatedUser = await userCollection.findOne({ brusName: userBrusName });
 
     return NextResponse.json({ updatedUser }, { status: 200 });
   } catch (error) {
