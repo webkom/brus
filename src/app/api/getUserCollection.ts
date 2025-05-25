@@ -1,5 +1,3 @@
-'use server'
-
 import { Collection } from "mongodb";
 import client from "../_lib/mongodb";
 import { User } from "../utils/interfaces";

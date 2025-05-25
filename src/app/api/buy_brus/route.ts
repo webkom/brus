@@ -14,7 +14,9 @@ export async function POST(req: Request) {
       { $inc: { saldo: -brusAmount * BRUS_COST[brusType] } },
     );
 
-    const updatedUser = await userCollection.findOne({ brusName: userBrusName });
+    const updatedUser = await userCollection.findOne({
+      brusName: userBrusName,
+    });
 
     return NextResponse.json({ updatedUser }, { status: 200 });
   } catch (error) {
