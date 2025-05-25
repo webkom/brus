@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { getUserCollection } from "../mongodb";
 import { User } from "@/app/utils/interfaces";
+import getUserCollection from "../getUserCollection";
 
 export async function GET() {
   try {

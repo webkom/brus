@@ -38,10 +38,10 @@ const WallOfShameContent: React.FC<WallOfShameContentProps> = ({
       queryClient.setQueryData(["usersKey"], (usersInCache: User[]) =>
         usersInCache.map((userInCache) => {
           const updatedUser = updatedUsers.find(
-            (user) => user.brusName === userInCache.brusName
+            (user) => user.brusName === userInCache.brusName,
           );
           return updatedUser ? updatedUser : userInCache;
-        })
+        }),
       );
     },
   });

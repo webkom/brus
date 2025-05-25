@@ -1,19 +1,22 @@
-import { getUserCollection } from "../mongodb";
 import { BRUS_COST } from "@/app/utils/constants";
 import { BuyRefillBrusRequest } from "@/app/utils/interfaces";
 import { NextResponse } from "next/server";
+import getUserCollection from "../getUserCollection";
 
 export const POST = async (req: Request) => {
   try {
     const userCollection = await getUserCollection();
-    const data = (await req.json()) as BuyRefillBrusRequest;
-    const amount = data.brusAmount;
-    const username = data.userBrusName;
-    userCollection.updateOne(
-      { brusName: username },
-      { $inc: { saldo: amount * BRUS_COST[data.brusType] } },
+    const { brusAmount, userBrusName, brusType } =
+      (await req.json()) as BuyRefillBrusRequest;
+
+    await userCollection.updateOne(
+      { brusName: userBrusName },
+      { $inc: { saldo: brusAmount * BRUS_COST[brusType] } },
     );
-    const updatedUser = await userCollection.findOne({ brusName: username });
+
+    const updatedUser = await userCollection.findOne({
+      brusName: userBrusName,
+    });
     if (!updatedUser) {
       return NextResponse.json({ error: "No user found" }, { status: 500 });
     }

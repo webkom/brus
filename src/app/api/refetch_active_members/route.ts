@@ -1,7 +1,7 @@
 import { MEMBERS_URL } from "@/app/utils/constants";
 import { Member, User } from "@/app/utils/interfaces";
 import { NextResponse } from "next/server";
-import { getUserCollection } from "../mongodb";
+import getUserCollection from "../getUserCollection";
 
 export async function GET() {
   const response = await fetch(MEMBERS_URL, {
@@ -16,7 +16,7 @@ export async function GET() {
       {
         error: `Klarte ikke hente medlemmer fra members, feilkode ${response.status}`,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 
@@ -35,7 +35,7 @@ export async function GET() {
   if (!(await addUsersToCollection(users))) {
     return NextResponse.json(
       { error: "Klarte ikke legge til brukerne i databasen" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 
@@ -52,7 +52,7 @@ const addUsersToCollection = async (users: User[]) => {
           .find({ brusName: { $in: userBrusNames } })
           .project({ brusName: 1 })
           .toArray()
-      ).map((user) => user.brusName)
+      ).map((user) => user.brusName),
     );
     const newUsers = users.filter((u) => !existingUserNames.has(u.brusName));
     newUsers.length > 0 && (await userCollection.insertMany(newUsers));

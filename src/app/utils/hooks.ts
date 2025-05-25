@@ -29,7 +29,7 @@ export const refetchActiveMembers: () => Promise<void> = async () => {
   }
   const data = await res.json();
   return new Promise((_, reject) =>
-    reject(data.error ?? "Klarte ikke hente aktive medlemmer")
+    reject(data.error ?? "Klarte ikke hente aktive medlemmer"),
   );
 };
 
