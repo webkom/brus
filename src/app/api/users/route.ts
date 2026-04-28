@@ -8,8 +8,9 @@ export async function GET() {
     const users: User[] = (await userCollection.find({}).toArray()) as User[];
     return NextResponse.json({ users: users }, { status: 200 });
   } catch (error) {
-    console.error("Failed to parse JSON response:", error);
-    return NextResponse.json({ error }, { status: 500 });
+    console.error("Failed to fetch users:", error);
+    const message = error instanceof Error ? error.message : String(error);
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
 
