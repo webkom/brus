@@ -4,9 +4,12 @@ import { NextResponse } from "next/server";
 import getUserCollection from "../getUserCollection";
 
 export async function GET() {
+  const credentials = Buffer.from(
+    `${process.env.MEMBERS_USERNAME}:${process.env.MEMBERS_PASSWORD}`,
+  ).toString("base64");
   const response = await fetch(MEMBERS_URL, {
     headers: {
-      Authorization: `Basic ${process.env.MEMBERS_AUTH_KEY}`,
+      Authorization: `Basic ${credentials}`,
       Accept: "application/json",
     },
   });
