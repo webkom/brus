@@ -5,9 +5,11 @@ interface HeaderProps {
 }
 
 export function Header({ users }: HeaderProps) {
-  const inDebt = users.filter((u) => u.saldo < 0);
-  const stocked = users.filter((u) => u.saldo >= 0);
-  const totalDebt = Math.round(inDebt.reduce((sum, u) => sum + u.saldo, 0));
+  const allHistory = users.flatMap((u) => u.history ?? []);
+  const totalRefilled = allHistory.filter((e) => e.type === "refill").reduce((sum, e) => sum + e.qty, 0);
+  const totalBought = allHistory.filter((e) => e.type === "buy").reduce((sum, e) => sum + e.qty, 0);
+  const fridgeCount = Math.max(0, totalRefilled - totalBought);
+  const totalBalance = Math.round(users.reduce((sum, u) => sum + u.saldo, 0));
 
   return (
     <header className="grid grid-cols-[1fr_auto] items-end pb-7 border-b-[3px] border-dashed border-ink mb-7">
@@ -50,14 +52,14 @@ export function Header({ users }: HeaderProps) {
           Brus i kjøleskapet
         </p>
         <div className="font-display font-extrabold text-[82px] leading-[.9] tracking-[-0.04em] flex items-baseline gap-2">
-          {users.length}
+          {fridgeCount}
           <span className="text-[16px] font-mono font-medium tracking-[0.1em] uppercase text-ink-soft">
             stk
           </span>
         </div>
         <div className="flex justify-between font-mono text-[11px] text-ink-soft mt-1.5 pt-2 border-t-[1.5px] border-dashed border-ink">
-          <span>{stocked.length} med lager</span>
-          <span>{totalDebt}kr i minus</span>
+          <span>{users.length} medlemmer</span>
+          <span>{totalBalance >= 0 ? "+" : ""}{totalBalance}kr totalt</span>
         </div>
       </div>
     </header>

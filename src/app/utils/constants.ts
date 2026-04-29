@@ -1,13 +1,16 @@
 export const MEMBERS_URL = "https://members.webkom.dev/";
-export const REFETCH_MEMBERS_ROUTE = "/refetch_active_members";
-export const USERS_ROUTE = "/users";
 export const BUY_BRUS_ROUTE = "/buy_brus";
 export const REFILL_BRUS_ROUTE = "/refill";
-export const WALLOFSHAME_ROUTE = "/applyshame";
 
 export const API_URL = "/api";
 
-export type BrusType = "Solo" | "Urge" | "Dahls" | "Fanta" | "Cola" | "Munkholm";
+export type BrusType =
+  | "Solo"
+  | "Urge"
+  | "Dahls"
+  | "Fanta"
+  | "Cola"
+  | "Munkholm";
 
 export const BRUS_COST: Record<BrusType, number> = {
   Solo: 30,
@@ -27,4 +30,11 @@ export const BRUS_COLOR: Record<BrusType, string> = {
   Munkholm: "#7C9A3F",
 };
 
-export const BRUS_TYPES: BrusType[] = ["Solo", "Urge", "Dahls", "Fanta", "Cola", "Munkholm"];
+export const BRUS_TYPES: BrusType[] = [
+  "Solo",
+  "Urge",
+  "Dahls",
+  "Fanta",
+  "Cola",
+  "Munkholm",
+];

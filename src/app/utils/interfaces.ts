@@ -18,10 +18,6 @@ export interface User {
   history?: HistoryEvent[];
 }
 
-export interface MinimalUser {
-  brusName: string;
-  saldo: number;
-}
 
 export interface Member {
   name: string;
@@ -57,8 +53,3 @@ export interface BuyRefillBrusRequest {
   brusAmount: number;
 }
 
-export interface BrusProduct {
-  type: BrusType;
-  price: number;
-  stock: number;
-}

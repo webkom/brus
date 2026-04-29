@@ -1,8 +1,5 @@
 import { MongoClient } from "mongodb";
 
-// Based on example
-// https://github.com/vercel/next.js/tree/canary/examples/with-mongodb
-
 const uri = process.env.MONGODB_URI || "mongodb://localhost:27017";
 let client: MongoClient;
 

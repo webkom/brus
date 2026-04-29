@@ -1,5 +1,15 @@
 import { User } from "../utils/interfaces";
+import { BRUS_COLOR, BrusType } from "../utils/constants";
 import styles from "./PersonCard.module.css";
+
+function CanShape({ color }: { color: string }) {
+  return (
+    <svg width="10" height="16" viewBox="0 0 10 16" fill="none">
+      <rect x="1" y="3" width="8" height="11" rx="2" fill={color} stroke="var(--color-ink)" strokeWidth="1.2" />
+      <rect x="1.5" y="1" width="7" height="3.5" rx="1.5" fill={color} stroke="var(--color-ink)" strokeWidth="1.2" />
+    </svg>
+  );
+}
 
 function getRotation(name: string): number {
   const code = name.charCodeAt(0) % 9;
@@ -18,6 +28,14 @@ interface PersonCardProps {
 
 export function PersonCard({ user, onClick }: PersonCardProps) {
   const isDebt = user.saldo < 0;
+  const brandCounts = (user.history ?? [])
+    .filter((e) => e.type === "buy")
+    .reduce<Record<string, number>>((acc, e) => {
+      acc[e.brusType] = (acc[e.brusType] ?? 0) + e.qty;
+      return acc;
+    }, {});
+  const brands = Object.entries(brandCounts) as [BrusType, number][];
+
   const initials = user.name
     .split(" ")
     .map((n) => n[0])
@@ -64,6 +82,18 @@ export function PersonCard({ user, onClick }: PersonCardProps) {
           {formatSaldo(user.saldo)}
         </span>
       </div>
+
+      {/* Drink can row */}
+      {brands.length > 0 && (
+        <div className="flex items-center gap-2 overflow-hidden border-t-[1.5px] border-dashed border-ink pt-2">
+          {brands.map(([brand, count]) => (
+            <div key={brand} className="flex items-center gap-1 flex-shrink-0">
+              <CanShape color={BRUS_COLOR[brand] ?? "#888"} />
+              <span className="font-mono text-[10px] text-ink-soft">{count}×</span>
+            </div>
+          ))}
+        </div>
+      )}
     </button>
   );
 }

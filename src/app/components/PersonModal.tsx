@@ -164,10 +164,11 @@ export function PersonModal({
                     background: isActive ? bg : "transparent",
                     color: isActive ? getContrastColor(bg) : "var(--color-ink)",
                     border: "2px solid var(--color-ink)",
+                    boxShadow: "var(--shadow-sm)",
                   }}
                 >
                   <span
-                    className="inline-block w-2 h-2 rounded-full border border-black/20"
+                    className="inline-block w-2 h-2 rounded-full border border-black"
                     style={{ background: bg }}
                   />
                   {brand}

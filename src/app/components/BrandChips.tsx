@@ -22,7 +22,7 @@ export function BrandChips({ active, onChange }: BrandChipsProps) {
   }
 
   return (
-    <div className="flex flex-wrap gap-2 mb-8">
+    <div className="flex flex-wrap gap-2">
       <motion.button
         {...tapProps}
         onClick={() => onChange(new Set())}
@@ -30,6 +30,7 @@ export function BrandChips({ active, onChange }: BrandChipsProps) {
         style={{
           background: active.size === 0 ? "var(--color-ink)" : "transparent",
           color: active.size === 0 ? "var(--color-paper)" : "var(--color-ink)",
+          boxShadow: "var(--shadow-sm)",
         }}
       >
         Alle
@@ -44,12 +45,15 @@ export function BrandChips({ active, onChange }: BrandChipsProps) {
             className="px-3 py-1 rounded-full font-mono text-[11px] tracking-[0.06em] uppercase transition-colors flex items-center gap-1.5"
             style={{
               background: isActive ? BRUS_COLOR[brand] : "transparent",
-              color: isActive ? getContrastColor(BRUS_COLOR[brand]) : "var(--color-ink)",
+              color: isActive
+                ? getContrastColor(BRUS_COLOR[brand])
+                : "var(--color-ink)",
               border: "2px solid var(--color-ink)",
+              boxShadow: "var(--shadow-sm)",
             }}
           >
             <span
-              className="inline-block w-2 h-2 rounded-full border border-black/20"
+              className="inline-block w-2 h-2 rounded-full border border-black"
               style={{ background: BRUS_COLOR[brand] }}
             />
             {brand}

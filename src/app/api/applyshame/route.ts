@@ -3,8 +3,10 @@ import { NextResponse } from "next/server";
 import getUserCollection from "../getUserCollection";
 
 export const POST = async (req: Request) => {
-  function applyPunishment(amount: number, daysSincePunishment: number) {
-    if (daysSincePunishment >= 7) {
+  const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000 - 5 * 60 * 1000; // 604_500_000
+
+  function applyPunishment(amount: number, elapsedMs: number) {
+    if (elapsedMs >= SEVEN_DAYS_MS) {
       return Math.ceil(amount / 100) * BRUS_COST.Dahls;
     }
     return 0;
@@ -22,28 +24,23 @@ export const POST = async (req: Request) => {
           updateOne: {
             filter: { brusName: user.brusName },
             update: {
-              $set: { saldo: 0, dateSinceNegative: null },
+              $set: { dateSinceNegative: null },
             },
           },
         });
         continue;
       }
 
+      const isFirstTime = !user.dateSinceNegative;
+      if (isFirstTime) user.dateSinceNegative = today;
+
       let daysSincePunishment = 0;
-      if (user.dateSinceNegative) {
+      if (!isFirstTime && user.dateSinceNegative) {
         const lastPunishmentDate = new Date(user.dateSinceNegative);
-        const diffTime = Math.abs(
-          today.getTime() - lastPunishmentDate.getTime(),
-        );
-        daysSincePunishment += Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      } else {
-        user.dateSinceNegative = today;
+        daysSincePunishment = today.getTime() - lastPunishmentDate.getTime();
       }
 
-      const punishment = applyPunishment(
-        Math.abs(user.saldo),
-        daysSincePunishment,
-      );
+      const punishment = applyPunishment(Math.abs(user.saldo), daysSincePunishment);
       const newSaldo = user.saldo - punishment;
 
       bulkOperations.push({
@@ -52,9 +49,12 @@ export const POST = async (req: Request) => {
           update: {
             $set: {
               saldo: newSaldo >= 0 ? 0 : newSaldo,
-              ...(newSaldo >= 0 ? { dateSinceNegative: null } : {}),
+              dateSinceNegative: isFirstTime
+                ? today
+                : newSaldo >= 0
+                  ? null
+                  : user.dateSinceNegative,
             },
-            ...(user.dateSinceNegative ? {} : { dateSinceNegative: today }),
           },
         },
       });

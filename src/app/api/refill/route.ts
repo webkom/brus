@@ -15,7 +15,15 @@ export const POST = async (req: Request) => {
         $inc: { saldo: brusAmount * BRUS_COST[brusType] },
         $push: {
           history: {
-            $each: [{ type: "refill", brusType, qty: brusAmount, amount: brusAmount * BRUS_COST[brusType], ts: Date.now() }],
+            $each: [
+              {
+                type: "refill",
+                brusType,
+                qty: brusAmount,
+                amount: brusAmount * BRUS_COST[brusType],
+                ts: Date.now(),
+              },
+            ],
             $position: 0,
             $slice: 30,
           },

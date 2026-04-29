@@ -1,37 +1,5 @@
-import {
-  API_URL,
-  BRUS_COST,
-  BUY_BRUS_ROUTE,
-  REFETCH_MEMBERS_ROUTE,
-  REFILL_BRUS_ROUTE,
-  USERS_ROUTE,
-  WALLOFSHAME_ROUTE,
-} from "./constants";
-import { BuyRefillBrusRequest, User } from "./interfaces";
-
-export const getUsers = async (): Promise<User[]> => {
-  const response = await fetch(`${API_URL}${USERS_ROUTE}`);
-  let data: User[] = [];
-  try {
-    const res = (await response.json()) as { users: User[] };
-    data = res.users;
-    return data;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-};
-
-export const refetchActiveMembers: () => Promise<void> = async () => {
-  const res = await fetch(`${API_URL}${REFETCH_MEMBERS_ROUTE}`);
-  if (res.status === 200) {
-    return;
-  }
-  const data = await res.json();
-  return new Promise((_, reject) =>
-    reject(data.error ?? "Klarte ikke hente aktive medlemmer"),
-  );
-};
+import { API_URL, BRUS_COST, BUY_BRUS_ROUTE, REFILL_BRUS_ROUTE } from "./constants";
+import { BuyRefillBrusRequest } from "./interfaces";
 
 export const buyBrus = async ({
   brusAmount,
@@ -79,13 +47,3 @@ export const refillBrus = async ({
   return updatedUser;
 };
 
-export const triggerWallOfShame = async () => {
-  const res = await fetch(`${API_URL}${WALLOFSHAME_ROUTE}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  const updatedUsers = await res.json().then((data) => data.updatedUsers);
-  return updatedUsers as User[];
-};
