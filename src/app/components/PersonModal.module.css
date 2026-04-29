@@ -1,0 +1,31 @@
+.scrim {
+  animation: fadeIn 0.15s ease;
+}
+
+.modal {
+  animation: popIn 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.ctaBtn {
+  transition: transform 0.08s, box-shadow 0.08s;
+}
+
+.ctaBtn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--ink) !important;
+}
+
+.ctaBtn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink) !important;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes popIn {
+  from { transform: scale(0.9) rotate(-2deg); opacity: 0; }
+  to   { transform: scale(1)   rotate(0deg);  opacity: 1; }
+}

@@ -1,15 +1,25 @@
-"use client";
-import FullscreenTrigger from "./components/FullscreenTrigger";
-import UserGrid from "./components/UserGrid";
-import WallOfShame from "./components/WallOfShame";
+import getUserCollection from "./api/getUserCollection";
+import { User } from "./utils/interfaces";
+import { PersonGrid } from "./components/PersonGrid";
+import { Header } from "./components/Header";
+import { Footer } from "./components/Footer";
 
-export default function Home() {
+export default async function Home() {
+  let users: User[] = [];
+  try {
+    const collection = await getUserCollection();
+    users = (await collection
+      .find({}, { projection: { _id: 0 } })
+      .toArray()) as User[];
+  } catch (error) {
+    console.error("Failed to connect to MongoDB:", error);
+  }
+
   return (
-    <div className="flex flex-col items-center gap-2 mb-4">
-      <FullscreenTrigger />
-      <h1 className="text-4xl text-center py-3">BRUUUUUUUUUSSSS baby</h1>
-      <UserGrid />
-      <WallOfShame />
-    </div>
+    <main className="max-w-[1180px] mx-auto px-7 py-12">
+      <Header users={users} />
+      <PersonGrid users={users} />
+      <Footer users={users} />
+    </main>
   );
 }
