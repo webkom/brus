@@ -10,7 +10,7 @@ export function Header({ users }: HeaderProps) {
   const totalDebt = Math.round(inDebt.reduce((sum, u) => sum + u.saldo, 0));
 
   return (
-    <header className="grid grid-cols-[1fr_auto] items-end gap-6 pb-7 border-b-[3px] border-dashed border-ink mb-10">
+    <header className="grid grid-cols-[1fr_auto] items-end pb-7 border-b-[3px] border-dashed border-ink mb-7">
       <div>
         <h1 className="font-display font-extrabold text-[clamp(40px,10vw,7.75rem)] leading-[.85] tracking-[-0.09em] m-0 flex items-center flex-wrap gap-x-2">
           <span className="text-accent" style={{ fontStretch: "75%" }}>

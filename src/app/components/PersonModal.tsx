@@ -1,12 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { User } from "../utils/interfaces";
-import { BRUS_COST } from "../utils/constants";
+import {
+  BRUS_COST,
+  BRUS_COLOR,
+  BRUS_TYPES,
+  BrusType,
+} from "../utils/constants";
 import { buyBrus, refillBrus } from "../utils/hooks";
 import styles from "./PersonModal.module.css";
-
-const PRICE = BRUS_COST["Dahls"];
 
 interface PersonModalProps {
   user: User;
@@ -14,9 +18,14 @@ interface PersonModalProps {
   onSuccess: (updated: User) => void;
 }
 
-export function PersonModal({ user: initialUser, onClose, onSuccess }: PersonModalProps) {
+export function PersonModal({
+  user: initialUser,
+  onClose,
+  onSuccess,
+}: PersonModalProps) {
   const [user, setUser] = useState(initialUser);
   const [tab, setTab] = useState<"buy" | "refill">("buy");
+  const [selectedBrand, setSelectedBrand] = useState<BrusType>("Dahls");
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(false);
 
@@ -24,7 +33,9 @@ export function PersonModal({ user: initialUser, onClose, onSuccess }: PersonMod
   const formattedSaldo = `${user.saldo > 0 ? "+" : ""}${Math.round((user.saldo + Number.EPSILON) * 100) / 100}kr`;
 
   useEffect(() => {
-    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, [onClose]);
@@ -33,7 +44,11 @@ export function PersonModal({ user: initialUser, onClose, onSuccess }: PersonMod
     setLoading(true);
     try {
       const fn = tab === "buy" ? buyBrus : refillBrus;
-      const updated = await fn({ brusType: "Dahls", userBrusName: user.brusName, brusAmount: quantity });
+      const updated = await fn({
+        brusType: selectedBrand,
+        userBrusName: user.brusName,
+        brusAmount: quantity,
+      });
       if (updated) {
         setUser(updated);
         onSuccess(updated);
@@ -44,32 +59,51 @@ export function PersonModal({ user: initialUser, onClose, onSuccess }: PersonMod
   }
 
   return (
-    <div
-      className={`${styles.scrim} fixed inset-0 z-50 flex items-center justify-center p-5 bg-ink/35 backdrop-blur-sm`}
+    <motion.div
+      className="fixed inset-0 z-50 flex items-center justify-center p-5 bg-ink/35 backdrop-blur-sm"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
       onClick={onClose}
     >
-      <div
+      <motion.div
         className={`${styles.modal} relative w-full max-w-[440px] bg-paper border-[3px] border-ink rounded-[6px] p-6`}
         style={{ boxShadow: "8px 8px 0 var(--ink)" }}
+        initial={{ y: 24, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: 24, opacity: 0 }}
+        transition={{ type: "spring", stiffness: 340, damping: 30 }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close */}
-        <button
+        <motion.button
           onClick={onClose}
+          whileTap={{ scale: 0.85, rotate: 15 }}
+          transition={{ type: "spring", stiffness: 400, damping: 20 }}
           className="absolute -top-4 -right-4 w-9 h-9 rounded-full bg-accent-2 border-[3px] border-ink font-display font-extrabold text-lg flex items-center justify-center"
           style={{ boxShadow: "var(--shadow-sm)" }}
         >
           ✕
-        </button>
+        </motion.button>
 
         {/* Header */}
         <div className="flex items-start gap-4 pb-5 border-b-[2px] border-dashed border-ink mb-5">
           <div className="w-16 h-16 flex-none border-[2.5px] border-ink rounded-[4px] overflow-hidden bg-paper-2 flex items-center justify-center">
             {user.avatar ? (
-              <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
+              <img
+                src={user.avatar}
+                alt={user.name}
+                className="w-full h-full object-cover"
+              />
             ) : (
               <span className="font-display font-extrabold text-3xl text-ink">
-                {user.name.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase()}
+                {user.name
+                  .split(" ")
+                  .map((n) => n[0])
+                  .join("")
+                  .slice(0, 2)
+                  .toUpperCase()}
               </span>
             )}
           </div>
@@ -78,8 +112,12 @@ export function PersonModal({ user: initialUser, onClose, onSuccess }: PersonMod
               {user.name.split(" ")[0]}
             </h2>
             <div className="flex items-center gap-2 mt-1">
-              <p className="font-mono text-[11px] text-ink-soft tracking-[0.06em]">@{user.github}</p>
-              <span className={`inline-block px-3 py-0.5 rounded-full font-mono text-[11px] tracking-[0.06em] ${isDebt ? "bg-accent text-white" : "bg-ink text-paper"}`}>
+              <p className="font-mono text-[11px] text-ink-soft tracking-[0.06em]">
+                @{user.github}
+              </p>
+              <span
+                className={`inline-block px-3 py-0.5 rounded-full font-mono text-[11px] tracking-[0.06em] ${isDebt ? "bg-accent text-white" : "bg-ink text-paper"}`}
+              >
                 Saldo: {formattedSaldo}
               </span>
             </div>
@@ -87,13 +125,18 @@ export function PersonModal({ user: initialUser, onClose, onSuccess }: PersonMod
         </div>
 
         {/* Tabs */}
-        <div className="flex border-[2.5px] border-ink rounded-[4px] overflow-hidden mb-5" style={{ boxShadow: "var(--shadow-sm)" }}>
+        <div
+          className="flex border-[2.5px] border-ink rounded-[4px] overflow-hidden mb-5"
+          style={{ boxShadow: "var(--shadow-sm)" }}
+        >
           {(["buy", "refill"] as const).map((t) => (
             <button
               key={t}
               onClick={() => setTab(t)}
               className={`flex-1 py-2.5 font-display font-extrabold text-[15px] transition-colors ${
-                tab === t ? "bg-ink text-paper" : "bg-white text-ink hover:bg-paper-2"
+                tab === t
+                  ? "bg-ink text-paper"
+                  : "bg-white text-ink hover:bg-paper-2"
               }`}
             >
               {t === "buy" ? "🥤 Kjøp brus" : "📦 Fyll på"}
@@ -101,16 +144,54 @@ export function PersonModal({ user: initialUser, onClose, onSuccess }: PersonMod
           ))}
         </div>
 
+        {/* Brand selector */}
+        <div className="mb-5">
+          <label className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-soft block mb-2">
+            Brus
+          </label>
+          <div className="flex flex-wrap gap-2">
+            {BRUS_TYPES.map((brand) => {
+              const isActive = selectedBrand === brand;
+              const bg = BRUS_COLOR[brand];
+              return (
+                <motion.button
+                  key={brand}
+                  onClick={() => setSelectedBrand(brand)}
+                  whileTap={{ scale: 0.9 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                  className="px-3 py-1.5 rounded-full font-mono text-[11px] tracking-[0.06em] uppercase transition-colors flex items-center gap-1.5"
+                  style={{
+                    background: isActive ? bg : "transparent",
+                    color: isActive ? getContrastColor(bg) : "var(--color-ink)",
+                    border: "2px solid var(--color-ink)",
+                  }}
+                >
+                  <span
+                    className="inline-block w-2 h-2 rounded-full border border-black/20"
+                    style={{ background: bg }}
+                  />
+                  {brand}
+                </motion.button>
+              );
+            })}
+          </div>
+        </div>
+
         {/* Stepper */}
         <div className="mb-5">
           <label className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-soft block mb-2">
             Antall
           </label>
-          <div className="flex items-stretch border-[2.5px] border-ink rounded-[4px] overflow-hidden bg-white" style={{ boxShadow: "var(--shadow-sm)" }}>
+          <div
+            className="flex items-stretch border-[2.5px] border-ink rounded-[4px] overflow-hidden bg-white"
+            style={{ boxShadow: "var(--shadow-sm)" }}
+          >
             <button
               className="w-12 font-display font-extrabold text-xl bg-white hover:bg-paper-2 transition-colors"
               onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-            >−</button>
+            >
+              −
+            </button>
             <input
               type="number"
               min={1}
@@ -121,7 +202,9 @@ export function PersonModal({ user: initialUser, onClose, onSuccess }: PersonMod
             <button
               className="w-12 font-display font-extrabold text-xl bg-white hover:bg-paper-2 transition-colors"
               onClick={() => setQuantity((q) => q + 1)}
-            >+</button>
+            >
+              +
+            </button>
           </div>
         </div>
 
@@ -135,18 +218,24 @@ export function PersonModal({ user: initialUser, onClose, onSuccess }: PersonMod
           style={{ boxShadow: "var(--shadow)" }}
         >
           <span>
-            {loading ? "…" : tab === "buy" ? `Kjøp ${quantity} Dahls` : `Fyll på ${quantity} Dahls`}
+            {loading
+              ? "…"
+              : tab === "buy"
+                ? `Kjøp ${quantity} ${selectedBrand}`
+                : `Fyll på ${quantity} ${selectedBrand}`}
           </span>
           <span className="font-mono text-[14px] opacity-90">
-            {tab === "buy" ? `−${quantity * PRICE}kr` : `+${quantity * PRICE}kr`}
+            {tab === "buy"
+              ? `−${quantity * BRUS_COST[selectedBrand]}kr`
+              : `+${quantity * BRUS_COST[selectedBrand]}kr`}
           </span>
         </button>
 
         {/* Footer hint */}
         <p className="font-mono text-[11px] text-ink-soft text-center mt-3 tracking-[0.04em]">
           {tab === "buy"
-            ? "tar én flaske ut av fridgen og legger den på din regning."
-            : "fyller på fridgen — takk for at du holder festen i live!"}
+            ? "tar én flaske ut av kjøleskapet og legger den på din regning."
+            : "fyller på kjøleskapet — takk for at du holder festen i live!"}
         </p>
 
         {/* History */}
@@ -157,20 +246,33 @@ export function PersonModal({ user: initialUser, onClose, onSuccess }: PersonMod
             </h3>
             <ul className="flex flex-col gap-1">
               {user.history!.slice(0, 6).map((e, i) => (
-                <li key={i} className="flex justify-between gap-2 font-mono text-[11px] text-ink-soft">
+                <li
+                  key={i}
+                  className="flex justify-between gap-2 font-mono text-[11px] text-ink-soft"
+                >
                   <span>
                     {e.type === "buy" ? "🥤" : "📦"}{" "}
                     {e.type === "buy" ? "Kjøpt" : "Fylt"} {e.qty}× {e.brusType}
                   </span>
-                  <b className="text-ink font-semibold whitespace-nowrap">{relativeTime(e.ts)}</b>
+                  <b className="text-ink font-semibold whitespace-nowrap">
+                    {relativeTime(e.ts)}
+                  </b>
                 </li>
               ))}
             </ul>
           </div>
         )}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
+}
+
+function getContrastColor(hex: string): string {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  return luminance > 0.5 ? "#1A1814" : "#F5EFE2";
 }
 
 function relativeTime(ts: number): string {
