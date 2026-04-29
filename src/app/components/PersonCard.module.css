@@ -1,0 +1,11 @@
+.avatarSheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 30% 25%,
+    rgba(255, 255, 255, 0.5),
+    transparent 40%
+  );
+  pointer-events: none;
+}

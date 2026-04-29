@@ -1,0 +1,19 @@
+.modal {
+  /* rotation set as initial static style; Framer Motion handles animation */
+}
+
+.ctaBtn {
+  transition:
+    transform 0.08s,
+    box-shadow 0.08s;
+}
+
+.ctaBtn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--ink) !important;
+}
+
+.ctaBtn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink) !important;
+}

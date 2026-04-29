@@ -11,7 +11,24 @@ export async function POST(req: Request) {
 
     await userCollection.updateOne(
       { brusName: userBrusName },
-      { $inc: { saldo: -brusAmount * BRUS_COST[brusType] } },
+      {
+        $inc: { saldo: -brusAmount * BRUS_COST[brusType] },
+        $push: {
+          history: {
+            $each: [
+              {
+                type: "buy",
+                brusType,
+                qty: brusAmount,
+                amount: brusAmount * BRUS_COST[brusType],
+                ts: Date.now(),
+              },
+            ],
+            $position: 0,
+            $slice: 30,
+          },
+        },
+      },
     );
 
     const updatedUser = await userCollection.findOne({

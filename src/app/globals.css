@@ -1,5 +1,81 @@
 @import "tailwindcss";
 
+@theme {
+  --color-paper: #f5efe2;
+  --color-paper-2: #efe7d2;
+  --color-ink: #1a1814;
+  --color-ink-soft: #3a342a;
+  --color-accent: #e83636;
+  --color-accent-2: #ffd23f;
+  --color-green: #2eaa62;
+
+  --font-display: var(--font-bricolage), sans-serif;
+  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
+  --font-mono: var(--font-dm-mono), monospace;
+}
+
+:root {
+  --paper: var(--color-paper);
+  --paper-2: var(--color-paper-2);
+  --ink: var(--color-ink);
+  --ink-soft: var(--color-ink-soft);
+  --line: var(--color-ink);
+  --accent: var(--color-accent);
+  --accent-2: var(--color-accent-2);
+  --green: var(--color-green);
+  --shadow: 4px 4px 0 var(--ink);
+  --shadow-sm: 2px 2px 0 var(--ink);
+}
+
+body {
+  background-color: var(--paper);
+  color: var(--ink);
+}
+
 button:hover {
   @apply cursor-pointer;
+}
+
+/* ── Floating bubbles background ─────────────────────────────────────────── */
+.bubbles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.bubble {
+  position: absolute;
+  bottom: -40px;
+  left: var(--x);
+  width: var(--s);
+  height: var(--s);
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow:
+    inset -3px -4px 0 rgba(26, 24, 20, 0.08),
+    inset 3px 3px 0 rgba(255, 255, 255, 0.7);
+  animation: rise var(--d) linear var(--delay) infinite;
+}
+
+@keyframes rise {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  50% {
+    transform: translate(calc(var(--drift) * 1px), -55vh) rotate(180deg);
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0, -110vh) rotate(360deg);
+    opacity: 0;
+  }
 }

@@ -1,5 +1,13 @@
 import { BrusType } from "./constants";
 
+export interface HistoryEvent {
+  type: "buy" | "refill";
+  brusType: string;
+  qty: number;
+  amount: number;
+  ts: number;
+}
+
 export interface User {
   brusName: string;
   github: string;
@@ -7,11 +15,7 @@ export interface User {
   saldo: number;
   avatar: string;
   dateSinceNegative: Date | null;
-}
-
-export interface MinimalUser {
-  brusName: string;
-  saldo: number;
+  history?: HistoryEvent[];
 }
 
 export interface Member {
@@ -46,10 +50,4 @@ export interface BuyRefillBrusRequest {
   brusType: BrusType;
   userBrusName: string;
   brusAmount: number;
-}
-
-export interface BrusProduct {
-  type: BrusType;
-  price: number;
-  stock: number;
 }
