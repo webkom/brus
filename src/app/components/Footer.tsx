@@ -10,7 +10,7 @@ export function Footer({ users }: { users: User[] }) {
           rel="noopener noreferrer"
           className="underline hover:text-ink transition-colors"
         >
-          brus-baby
+          brus
         </a>{" "}
         · {users.length} medlemmer
       </span>

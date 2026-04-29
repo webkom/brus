@@ -40,7 +40,10 @@ export const POST = async (req: Request) => {
         daysSincePunishment = today.getTime() - lastPunishmentDate.getTime();
       }
 
-      const punishment = applyPunishment(Math.abs(user.saldo), daysSincePunishment);
+      const punishment = applyPunishment(
+        Math.abs(user.saldo),
+        daysSincePunishment,
+      );
       const newSaldo = user.saldo - punishment;
 
       bulkOperations.push({

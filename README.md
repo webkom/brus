@@ -11,6 +11,7 @@ docker compose up -d   # starts MongoDB on localhost:27017
 ```
 
 Set `.env.local`:
+
 ```
 MONGODB_URI=mongodb://root:12345678@localhost:27017/brus?authSource=admin
 NEXT_PUBLIC_BASE_URL=http://localhost:3000
@@ -29,6 +30,7 @@ ssh -L 27017:<container-ip>:27017 webkom@192.168.1.128
 ```
 
 Set `.env.local`:
+
 ```
 MONGODB_URI=mongodb://<user>:<password>@localhost:27017/brus?authSource=admin
 NEXT_PUBLIC_BASE_URL=http://localhost:3000
@@ -42,13 +44,13 @@ yarn dev
 
 ## Environment variables
 
-| Variable | Description |
-|---|---|
-| `MONGODB_URI` | MongoDB connection string |
+| Variable               | Description                                             |
+| ---------------------- | ------------------------------------------------------- |
+| `MONGODB_URI`          | MongoDB connection string                               |
 | `NEXT_PUBLIC_BASE_URL` | Base URL used by the cron job to call `/api/applyshame` |
-| `MEMBERS_URL` | Endpoint for fetching active Webkom members |
-| `MEMBERS_USERNAME` | Basic auth username for members API |
-| `MEMBERS_PASSWORD` | Basic auth password for members API |
+| `MEMBERS_URL`          | Endpoint for fetching active Webkom members             |
+| `MEMBERS_USERNAME`     | Basic auth username for members API                     |
+| `MEMBERS_PASSWORD`     | Basic auth password for members API                     |
 
 ## Deploy (Coolify)
 

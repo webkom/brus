@@ -1,15 +1,10 @@
-import { User } from "../utils/interfaces";
-import { BRUS_COLOR, BrusType } from "../utils/constants";
-import styles from "./PersonCard.module.css";
+"use client";
 
-function CanShape({ color }: { color: string }) {
-  return (
-    <svg width="10" height="16" viewBox="0 0 10 16" fill="none">
-      <rect x="1" y="3" width="8" height="11" rx="2" fill={color} stroke="var(--color-ink)" strokeWidth="1.2" />
-      <rect x="1.5" y="1" width="7" height="3.5" rx="1.5" fill={color} stroke="var(--color-ink)" strokeWidth="1.2" />
-    </svg>
-  );
-}
+import { ShoppingCart, BottleWine } from "lucide-react";
+import { motion } from "framer-motion";
+import { User } from "../utils/interfaces";
+import { getAvatarColor } from "../utils/constants";
+import styles from "./PersonCard.module.css";
 
 function getRotation(name: string): number {
   const code = name.charCodeAt(0) % 9;
@@ -28,13 +23,15 @@ interface PersonCardProps {
 
 export function PersonCard({ user, onClick }: PersonCardProps) {
   const isDebt = user.saldo < 0;
-  const brandCounts = (user.history ?? [])
+  const history = user.history ?? [];
+
+  const totalRefilled = history
+    .filter((e) => e.type === "refill")
+    .reduce((sum, e) => sum + e.qty, 0);
+
+  const totalBought = history
     .filter((e) => e.type === "buy")
-    .reduce<Record<string, number>>((acc, e) => {
-      acc[e.brusType] = (acc[e.brusType] ?? 0) + e.qty;
-      return acc;
-    }, {});
-  const brands = Object.entries(brandCounts) as [BrusType, number][];
+    .reduce((sum, e) => sum + e.qty, 0);
 
   const initials = user.name
     .split(" ")
@@ -44,17 +41,33 @@ export function PersonCard({ user, onClick }: PersonCardProps) {
     .toUpperCase();
 
   return (
-    <button
+    <motion.button
       onClick={onClick}
-      className={`${styles.card} w-full text-left border-[3px] border-ink rounded-[4px] p-3 pb-2.5 flex flex-col gap-2 ${isDebt ? "bg-[#FFE9DD]" : "bg-white"}`}
       style={{
-        boxShadow: "var(--shadow)",
-        transform: `rotate(${getRotation(user.name)}deg)`,
+        rotate: getRotation(user.name),
+        boxShadow: "4px 4px 0 var(--ink)",
       }}
+      whileHover={{
+        y: -6,
+        scale: 1.03,
+        rotate: 0,
+        boxShadow: "6px 6px 0 var(--ink)",
+      }}
+      whileTap={{
+        y: 0,
+        scale: 0.97,
+        rotate: 0,
+        boxShadow: "2px 2px 0 var(--ink)",
+      }}
+      transition={{ type: "spring", stiffness: 350, damping: 22 }}
+      className={`${styles.card} w-full text-left border-[3px] border-ink rounded-[4px] p-3 pb-2.5 flex flex-col gap-2 ${isDebt ? "bg-[#FFE9DD]" : "bg-white"}`}
     >
       {/* Avatar */}
       <div
-        className={`${styles.avatarSheen} relative aspect-square border-[2.5px] border-ink rounded-[4px] overflow-hidden bg-paper flex items-center justify-center`}
+        className={`${styles.avatarSheen} relative aspect-square border-[2.5px] border-ink rounded-[4px] overflow-hidden flex items-center justify-center`}
+        style={
+          user.avatar ? undefined : { background: getAvatarColor(user.name) }
+        }
       >
         {user.avatar ? (
           <img
@@ -83,17 +96,29 @@ export function PersonCard({ user, onClick }: PersonCardProps) {
         </span>
       </div>
 
-      {/* Drink can row */}
-      {brands.length > 0 && (
-        <div className="flex items-center gap-2 overflow-hidden border-t-[1.5px] border-dashed border-ink pt-2">
-          {brands.map(([brand, count]) => (
-            <div key={brand} className="flex items-center gap-1 flex-shrink-0">
-              <CanShape color={BRUS_COLOR[brand] ?? "#888"} />
-              <span className="font-mono text-[10px] text-ink-soft">{count}×</span>
-            </div>
-          ))}
-        </div>
-      )}
-    </button>
+      {/* Stats row */}
+      <div className="flex items-center gap-3 border-t-[1.5px] border-dashed border-ink pt-2">
+        {totalRefilled === 0 && totalBought === 0 ? (
+          <span className="font-mono text-[10px] text-ink-soft italic">
+            Ingen drinker
+          </span>
+        ) : (
+          <>
+            {totalBought > 0 && (
+              <div className="flex items-center gap-1 text-accent">
+                <BottleWine size={13} strokeWidth={3} />
+                <span className="font-mono text-[10px]">x{totalBought}</span>
+              </div>
+            )}
+            {totalRefilled > 0 && (
+              <div className="flex items-center gap-1 text-green">
+                <ShoppingCart size={13} strokeWidth={3} />
+                <span className="font-mono text-[10px]">x{totalRefilled}</span>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </motion.button>
   );
 }

@@ -5,7 +5,7 @@
   --color-paper-2: #efe7d2;
   --color-ink: #1a1814;
   --color-ink-soft: #3a342a;
-  --color-accent: #ff6b2c;
+  --color-accent: #e83636;
   --color-accent-2: #ffd23f;
   --color-green: #2eaa62;
 
@@ -34,4 +34,48 @@ body {
 
 button:hover {
   @apply cursor-pointer;
+}
+
+/* ── Floating bubbles background ─────────────────────────────────────────── */
+.bubbles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.bubble {
+  position: absolute;
+  bottom: -40px;
+  left: var(--x);
+  width: var(--s);
+  height: var(--s);
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow:
+    inset -3px -4px 0 rgba(26, 24, 20, 0.08),
+    inset 3px 3px 0 rgba(255, 255, 255, 0.7);
+  animation: rise var(--d) linear var(--delay) infinite;
+}
+
+@keyframes rise {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  50% {
+    transform: translate(calc(var(--drift) * 1px), -55vh) rotate(180deg);
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0, -110vh) rotate(360deg);
+    opacity: 0;
+  }
 }

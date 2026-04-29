@@ -18,7 +18,6 @@ export interface User {
   history?: HistoryEvent[];
 }
 
-
 export interface Member {
   name: string;
   full_name: string;
@@ -52,4 +51,3 @@ export interface BuyRefillBrusRequest {
   userBrusName: string;
   brusAmount: number;
 }
-

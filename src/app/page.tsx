@@ -15,7 +15,7 @@ export default async function Home() {
   }
 
   return (
-    <main className="max-w-[1180px] mx-auto px-7 py-12">
+    <main className="relative z-[1] max-w-[1180px] mx-auto px-4 py-8 sm:px-7 sm:py-12">
       <Header users={users} />
       <PersonGrid users={users} />
       <Footer users={users} />

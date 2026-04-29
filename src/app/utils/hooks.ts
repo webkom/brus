@@ -1,4 +1,9 @@
-import { API_URL, BRUS_COST, BUY_BRUS_ROUTE, REFILL_BRUS_ROUTE } from "./constants";
+import {
+  API_URL,
+  BRUS_COST,
+  BUY_BRUS_ROUTE,
+  REFILL_BRUS_ROUTE,
+} from "./constants";
 import { BuyRefillBrusRequest } from "./interfaces";
 
 export const buyBrus = async ({
@@ -46,4 +51,3 @@ export const refillBrus = async ({
   if (!updatedUser) return false;
   return updatedUser;
 };
-

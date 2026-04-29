@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import { User } from "../utils/interfaces";
 import {
@@ -8,6 +9,7 @@ import {
   BRUS_COLOR,
   BRUS_TYPES,
   BrusType,
+  getAvatarColor,
 } from "../utils/constants";
 import { buyBrus, refillBrus } from "../utils/hooks";
 import styles from "./PersonModal.module.css";
@@ -58,9 +60,9 @@ export function PersonModal({
     }
   }
 
-  return (
+  return createPortal(
     <motion.div
-      className="fixed inset-0 z-50 flex items-center justify-center p-5 bg-ink/35 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-5 bg-ink/35 backdrop-blur-sm"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -68,20 +70,20 @@ export function PersonModal({
       onClick={onClose}
     >
       <motion.div
-        className={`${styles.modal} relative w-full max-w-[440px] bg-paper border-[3px] border-ink rounded-[6px] p-6`}
+        className={`${styles.modal} relative w-full sm:max-w-[440px] bg-paper border-t-[3px] sm:border-[3px] border-ink rounded-t-[12px] sm:rounded-[6px] p-4 sm:p-6`}
         style={{ boxShadow: "8px 8px 0 var(--ink)" }}
-        initial={{ y: 24, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        exit={{ y: 24, opacity: 0 }}
-        transition={{ type: "spring", stiffness: 340, damping: 30 }}
+        initial={{ y: "100%" }}
+        animate={{ y: 0 }}
+        exit={{ y: "100%" }}
+        transition={{ type: "spring", stiffness: 340, damping: 38 }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close */}
+        {/* Close — outside corner on desktop, inside top-right on mobile */}
         <motion.button
           onClick={onClose}
           whileTap={{ scale: 0.85, rotate: 15 }}
           transition={{ type: "spring", stiffness: 400, damping: 20 }}
-          className="absolute -top-4 -right-4 w-9 h-9 rounded-full bg-accent-2 border-[3px] border-ink font-display font-extrabold text-lg flex items-center justify-center"
+          className="absolute top-3 right-3 sm:-top-4 sm:-right-4 w-9 h-9 rounded-full bg-accent-2 border-[3px] border-ink font-display font-extrabold text-lg flex items-center justify-center"
           style={{ boxShadow: "var(--shadow-sm)" }}
         >
           ✕
@@ -89,7 +91,14 @@ export function PersonModal({
 
         {/* Header */}
         <div className="flex items-start gap-4 pb-5 border-b-[2px] border-dashed border-ink mb-5">
-          <div className="w-16 h-16 flex-none border-[2.5px] border-ink rounded-[4px] overflow-hidden bg-paper-2 flex items-center justify-center">
+          <div
+            className="w-16 h-16 flex-none border-[2.5px] border-ink rounded-[4px] overflow-hidden flex items-center justify-center"
+            style={
+              user.avatar
+                ? undefined
+                : { background: getAvatarColor(user.name) }
+            }
+          >
             {user.avatar ? (
               <img
                 src={user.avatar}
@@ -264,7 +273,8 @@ export function PersonModal({
           </div>
         )}
       </motion.div>
-    </motion.div>
+    </motion.div>,
+    document.body,
   );
 }
 

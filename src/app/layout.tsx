@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, DM_Sans, DM_Mono } from "next/font/google";
 import "./globals.css";
+import { BottomControls } from "./components/BottomControls";
 
 const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -20,7 +21,7 @@ const dmMono = DM_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Bruuuus",
+  title: "Bruuus",
   description: "Brus system for Webkom",
 };
 
@@ -38,9 +39,12 @@ export default function RootLayout({
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         {/* <meta httpEquiv="refresh" content="86400" /> */}
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/bruuusIcon.png" />
       </head>
-      <body className="font-sans">{children}</body>
+      <body className="font-sans">
+        {children}
+        <BottomControls />
+      </body>
     </html>
   );
 }

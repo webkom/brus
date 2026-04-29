@@ -36,11 +36,11 @@ export function PersonGrid({ users: initialUsers }: { users: User[] }) {
 
   return (
     <>
-      <div className="flex items-center justify-between gap-4 mb-8">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
         <BrandChips active={activebrands} onChange={setActiveBrands} />
         <ShameCountdown />
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
         {visibleUsers.map((user) => (
           <PersonCard
             key={user.brusName}
