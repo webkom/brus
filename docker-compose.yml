@@ -3,8 +3,8 @@ services:
   mongo:
     image: mongo:8.0
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: 12345678
+      MONGO_INITDB_ROOT_USERNAME: brus
+      MONGO_INITDB_ROOT_PASSWORD: 6vPQdOw08ADYLj
       MONGO_INITDB_DATABASE: brus
     ports:
       - 27017:27017

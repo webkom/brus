@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { User } from "../utils/interfaces";
@@ -9,12 +9,24 @@ import { PersonCard } from "./PersonCard";
 import { PersonModal } from "./PersonModal";
 import { BrandChips } from "./BrandChips";
 import { ShameCountdown } from "./ShameCountdown";
+import { Toast, ToastData } from "./Toast";
+
+let toastId = 0;
 
 export function PersonGrid({ users: initialUsers }: { users: User[] }) {
   const [users, setUsers] = useState(initialUsers);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [activebrands, setActiveBrands] = useState<Set<BrusType>>(new Set());
+  const [toasts, setToasts] = useState<ToastData[]>([]);
   const router = useRouter();
+
+  const addToast = useCallback((data: Omit<ToastData, "id">) => {
+    setToasts((prev) => [...prev, { ...data, id: ++toastId }]);
+  }, []);
+
+  const dismissToast = useCallback((id: number) => {
+    setToasts((prev) => prev.filter((t) => t.id !== id));
+  }, []);
 
   const visibleUsers =
     activebrands.size > 0
@@ -57,9 +69,12 @@ export function PersonGrid({ users: initialUsers }: { users: User[] }) {
             user={selectedUser}
             onClose={handleClose}
             onSuccess={handleSuccess}
+            onToast={addToast}
           />
         )}
       </AnimatePresence>
+
+      <Toast toasts={toasts} onDismiss={dismissToast} />
     </>
   );
 }

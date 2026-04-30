@@ -2,7 +2,7 @@ import { BRUS_COST } from "@/app/utils/constants";
 import { NextResponse } from "next/server";
 import getUserCollection from "../getUserCollection";
 
-export const POST = async (req: Request) => {
+export async function POST(req: Request) {
   const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000 - 5 * 60 * 1000; // 604_500_000
 
   function applyPunishment(amount: number, elapsedMs: number) {
@@ -70,6 +70,6 @@ export const POST = async (req: Request) => {
     const updatedUsers = await userCollection.find().toArray();
     return NextResponse.json({ updatedUsers }, { status: 200 });
   } catch (error: unknown) {
-    return NextResponse.json({ error: error }, { status: 500 });
+    return NextResponse.json({ error }, { status: 500 });
   }
-};
+}

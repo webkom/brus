@@ -1,7 +1,3 @@
-.modal {
-  /* rotation set as initial static style; Framer Motion handles animation */
-}
-
 .ctaBtn {
   transition:
     transform 0.08s,
