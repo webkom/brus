@@ -3,7 +3,7 @@ import { BuyRefillBrusRequest } from "@/app/utils/interfaces";
 import { NextResponse } from "next/server";
 import getUserCollection from "../getUserCollection";
 
-export const POST = async (req: Request) => {
+export async function POST(req: Request) {
   try {
     const userCollection = await getUserCollection();
     const { brusAmount, userBrusName, brusType } =
@@ -41,4 +41,4 @@ export const POST = async (req: Request) => {
   } catch (error) {
     return NextResponse.json({ error }, { status: 500 });
   }
-};
+}

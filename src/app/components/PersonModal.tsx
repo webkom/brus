@@ -10,20 +10,24 @@ import {
   BRUS_TYPES,
   BrusType,
   getAvatarColor,
+  getContrastColor,
 } from "../utils/constants";
 import { buyBrus, refillBrus } from "../utils/hooks";
+import { ToastData } from "./Toast";
 import styles from "./PersonModal.module.css";
 
 interface PersonModalProps {
   user: User;
   onClose: () => void;
   onSuccess: (updated: User) => void;
+  onToast: (data: Omit<ToastData, "id">) => void;
 }
 
 export function PersonModal({
   user: initialUser,
   onClose,
   onSuccess,
+  onToast,
 }: PersonModalProps) {
   const [user, setUser] = useState(initialUser);
   const [tab, setTab] = useState<"buy" | "refill">("buy");
@@ -54,7 +58,17 @@ export function PersonModal({
       if (updated) {
         setUser(updated);
         onSuccess(updated);
+        const amount = quantity * BRUS_COST[selectedBrand];
+        onToast({
+          type: tab,
+          message: tab === "buy"
+            ? `Kjøpt ${quantity}× ${selectedBrand}`
+            : `Fylt på ${quantity}× ${selectedBrand}`,
+          sub: tab === "buy" ? `−${amount}kr` : `+${amount}kr`,
+        });
       }
+    } catch {
+      onToast({ type: "error", message: "Noe gikk galt. Prøv igjen." });
     } finally {
       setLoading(false);
     }
@@ -70,7 +84,7 @@ export function PersonModal({
       onClick={onClose}
     >
       <motion.div
-        className={`${styles.modal} relative w-full sm:max-w-[440px] bg-paper border-t-[3px] sm:border-[3px] border-ink rounded-t-[12px] sm:rounded-[6px] p-4 sm:p-6`}
+        className="relative w-full sm:max-w-[440px] bg-paper border-t-[3px] sm:border-[3px] border-ink rounded-t-[12px] sm:rounded-[6px] p-4 sm:p-6"
         style={{ boxShadow: "8px 8px 0 var(--ink)" }}
         initial={{ y: "100%" }}
         animate={{ y: 0 }}
@@ -78,7 +92,6 @@ export function PersonModal({
         transition={{ type: "spring", stiffness: 340, damping: 38 }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close — outside corner on desktop, inside top-right on mobile */}
         <motion.button
           onClick={onClose}
           whileTap={{ scale: 0.85, rotate: 15 }}
@@ -276,14 +289,6 @@ export function PersonModal({
     </motion.div>,
     document.body,
   );
-}
-
-function getContrastColor(hex: string): string {
-  const r = parseInt(hex.slice(1, 3), 16);
-  const g = parseInt(hex.slice(3, 5), 16);
-  const b = parseInt(hex.slice(5, 7), 16);
-  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-  return luminance > 0.5 ? "#1A1814" : "#F5EFE2";
 }
 
 function relativeTime(ts: number): string {

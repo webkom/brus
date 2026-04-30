@@ -4,8 +4,8 @@ import { BuyRefillBrusRequest } from "@/app/utils/interfaces";
 import getUserCollection from "../getUserCollection";
 
 export async function POST(req: Request) {
-  const userCollection = await getUserCollection();
   try {
+    const userCollection = await getUserCollection();
     const { brusAmount, userBrusName, brusType } =
       (await req.json()) as BuyRefillBrusRequest;
 
@@ -31,9 +31,10 @@ export async function POST(req: Request) {
       },
     );
 
-    const updatedUser = await userCollection.findOne({
-      brusName: userBrusName,
-    });
+    const updatedUser = await userCollection.findOne({ brusName: userBrusName });
+    if (!updatedUser) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
 
     return NextResponse.json({ updatedUser }, { status: 200 });
   } catch (error) {
